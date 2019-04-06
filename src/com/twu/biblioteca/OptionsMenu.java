@@ -26,7 +26,7 @@ public class OptionsMenu {
     }
 
     private boolean isValidInput(String option) {
-        int optionNumber = 0;
+        int optionNumber;
         try {
             optionNumber = Integer.valueOf(option);
         }
