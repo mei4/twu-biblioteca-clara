@@ -10,19 +10,23 @@ public class OptionsMenu {
 
     public static final String ERROR_INVALID_OPTION = "Please select a valid option";
     private List<String> options;
+    private BooksManager booksManager;
 
-    public OptionsMenu(List<String> options) {
+    public OptionsMenu(List<String> options, BooksManager booksManager) {
         this.options = options;
+        this.booksManager = booksManager;
     }
 
     public void showMenu() {
         IntStream.range(0, options.size()).forEach(i -> System.out.println(i + 1 + "- " + options.get(i)));
     }
 
-    public void getOptionSelectedByTheUser() throws IOException {
+    public void manageOptionSelectedByTheUser() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String option = reader.readLine();
-        isValidInput(option);
+        if (isValidInput(option)) {
+                booksManager.showAllBooks();
+        }
     }
 
     private boolean isValidInput(String option) {
