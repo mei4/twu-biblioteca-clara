@@ -1,8 +1,12 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
+
 public class BibliotecaApp {
 
     public static void main(String[] args) {
-        System.out.println("Hello, world!");
+
+        WelcomeMessage.sayHello();
+        new OptionsMenu(new ArrayList<>()).showMenu();
     }
 }
