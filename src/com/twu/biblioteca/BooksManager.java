@@ -6,6 +6,9 @@ import java.util.stream.IntStream;
 public class BooksManager {
 
     public List<Book> books;
+    public static final String MESSAGE_SUCCESS_CHECKOUT = "Thank you! Enjoy the book";
+
+
 
     public BooksManager(List<Book> books) {
         this.books = books;
@@ -18,5 +21,6 @@ public class BooksManager {
     public void checkoutBook(String bookReference) {
         Book book = books.get(Integer.valueOf(bookReference) - 1);
         book.setCheckedOut();
+        System.out.println(MESSAGE_SUCCESS_CHECKOUT);
     }
 }

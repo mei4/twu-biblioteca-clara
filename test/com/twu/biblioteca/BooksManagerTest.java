@@ -14,6 +14,8 @@ import static org.junit.Assert.assertTrue;
 
 public class BooksManagerTest {
 
+    private String successMessageCheckout = "Thank you! Enjoy the book";
+
     public List<Book> books = new ArrayList<>(Arrays.asList(
             new Book("To Kill a Mockingbird", "Harper Lee", 1988),
             new Book("Pride and Prejudice", "Jane Austen", 1813),
@@ -50,5 +52,16 @@ public class BooksManagerTest {
         BooksManager booksManager = new BooksManager(books);
         booksManager.checkoutBook("1");
         assertTrue(books.get(0).isCheckedOut());
+    }
+
+    @Test
+    public void checkThatAConfirmationMessageIsDisplayedWhenBookCheckout() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        BooksManager booksManager = new BooksManager(books);
+        booksManager.checkoutBook("1");
+
+        assertEquals(successMessageCheckout + "\n", out.toString());
     }
 }

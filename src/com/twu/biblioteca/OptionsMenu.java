@@ -32,7 +32,6 @@ public class OptionsMenu {
                     break;
                 case "Checkout a book":
                     System.out.println("Please, type the reference of the book:");
-
                     String bookReference = reader.readLine();
                     booksManager.checkoutBook(bookReference);
                     break;
