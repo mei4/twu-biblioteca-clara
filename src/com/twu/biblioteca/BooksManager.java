@@ -6,9 +6,8 @@ import java.util.stream.IntStream;
 public class BooksManager {
 
     public List<Book> books;
-    public static final String MESSAGE_SUCCESS_CHECKOUT = "Thank you! Enjoy the book";
-
-
+    public static final String SUCCESS_MESSAGE_CHECKOUT = "Thank you! Enjoy the book";
+    public static final String ERROR_MESSAGE_CHECKOUT = "Sorry, that book is not available";
 
     public BooksManager(List<Book> books) {
         this.books = books;
@@ -19,8 +18,22 @@ public class BooksManager {
     }
 
     public void checkoutBook(String bookReference) {
-        Book book = books.get(Integer.valueOf(bookReference) - 1);
-        book.setCheckedOut();
-        System.out.println(MESSAGE_SUCCESS_CHECKOUT);
+        int index = 0;
+        try {
+            index = Integer.valueOf(bookReference) - 1;
+        }
+        catch (NumberFormatException e) {
+            System.out.println(ERROR_MESSAGE_CHECKOUT);
+            return;
+        }
+        if (index < 0 || index >= books.size()) {
+            System.out.println(ERROR_MESSAGE_CHECKOUT);
+        }
+        else {
+            Book book = books.get(index);
+            book.setCheckedOut();
+            System.out.println(SUCCESS_MESSAGE_CHECKOUT);
+        }
+
     }
 }

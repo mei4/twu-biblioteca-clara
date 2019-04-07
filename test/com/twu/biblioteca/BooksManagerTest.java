@@ -15,6 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class BooksManagerTest {
 
     private String successMessageCheckout = "Thank you! Enjoy the book";
+    private String errorMessageCheckout = "Sorry, that book is not available";
 
     public List<Book> books = new ArrayList<>(Arrays.asList(
             new Book("To Kill a Mockingbird", "Harper Lee", 1988),
@@ -63,5 +64,27 @@ public class BooksManagerTest {
         booksManager.checkoutBook("1");
 
         assertEquals(successMessageCheckout + "\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAnErrorMessageIsDisplayedWhenCheckoutOfAnInvalidReference() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        BooksManager booksManager = new BooksManager(books);
+        booksManager.checkoutBook("11");
+
+        assertEquals(errorMessageCheckout + "\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAnErrorMessageIsDisplayedWhenReferenceNumberFormatException() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        BooksManager booksManager = new BooksManager(books);
+        booksManager.checkoutBook("this");
+
+        assertEquals(errorMessageCheckout + "\n", out.toString());
     }
 }
