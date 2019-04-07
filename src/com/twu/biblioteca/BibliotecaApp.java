@@ -15,7 +15,7 @@ public class BibliotecaApp {
                 new Book("Pride and Prejudice", "Jane Austen", 1813),
                 new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925)));
         BooksManager booksManager = new BooksManager(books);
-        List<String> options = new ArrayList<>(Arrays.asList("List of Books"));
+        List<String> options = new ArrayList<>(Arrays.asList("List of Books", "Checkout a book"));
         OptionsMenu optionsMenu = new OptionsMenu(options, booksManager);
 
         optionsMenu.showMenu();

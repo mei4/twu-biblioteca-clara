@@ -23,13 +23,25 @@ public class OptionsMenu {
 
     public void manageOptionSelectedByTheUser() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String option = reader.readLine();
-        if (isValidInput(option)) {
-                booksManager.showAllBooks();
+        String optionIndex = reader.readLine();
+        if (isValidOptionInput(optionIndex)) {
+            String optionName = options.get(Integer.valueOf(optionIndex) - 1);
+            switch (optionName) {
+                case "List of books":
+                    booksManager.showAllBooks();
+                    break;
+                case "Checkout a book":
+                    System.out.println("Please, type the reference of the book:");
+
+                    String bookReference = reader.readLine();
+                    booksManager.checkoutBook(bookReference);
+                    break;
+            }
+
         }
     }
 
-    private boolean isValidInput(String option) {
+    private boolean isValidOptionInput(String option) {
         int optionNumber;
         try {
             optionNumber = Integer.valueOf(option);

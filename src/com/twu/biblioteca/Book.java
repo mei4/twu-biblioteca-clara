@@ -7,6 +7,7 @@ public class Book {
     private String title;
     private String author;
     private int yearPublished;
+    private boolean isCheckedOut;
 
     public Book(String title, String author, int yearPublished) {
         this.title = title;
@@ -16,5 +17,13 @@ public class Book {
 
     public String getDetails() {
         return title + " | " + author + " | " + yearPublished;
+    }
+
+    public void setCheckedOut() {
+        isCheckedOut = true;
+    }
+
+    public boolean isCheckedOut() {
+        return isCheckedOut;
     }
 }
