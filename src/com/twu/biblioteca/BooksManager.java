@@ -14,7 +14,8 @@ public class BooksManager {
     }
 
     public void showAllBooks() {
-        IntStream.range(0, books.size()).forEach(i -> System.out.println(i + 1 + "- " + books.get(i).getDetails()));;
+        IntStream.range(0, books.size()).filter(i -> !books.get(i).isCheckedOut())
+                .forEach(i -> System.out.println(i + 1 + "- " + books.get(i).getDetails()));
     }
 
     public void checkoutBook(String bookReference) {

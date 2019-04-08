@@ -45,7 +45,6 @@ public class BooksManagerTest {
         assertEquals("1- To Kill a Mockingbird | Harper Lee | 1988\n" +
                 "2- Pride and Prejudice | Jane Austen | 1813\n" +
                 "3- The Great Gatsby | F. Scott Fitzgerald | 1925\n", out.toString());
-
     }
 
     @Test
@@ -86,5 +85,19 @@ public class BooksManagerTest {
         booksManager.checkoutBook("this");
 
         assertEquals(errorMessageCheckout + "\n", out.toString());
+    }
+
+    @Test
+    public void checkThatCheckoutBooksAreNotInTheListOfAllBooks() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        books.get(1).setCheckedOut(); //Checkout Pride and Prejudice
+
+        BooksManager booksManager = new BooksManager(books);
+        booksManager.showAllBooks();
+
+        assertEquals("1- To Kill a Mockingbird | Harper Lee | 1988\n" +
+                "3- The Great Gatsby | F. Scott Fitzgerald | 1925\n", out.toString());
     }
 }
