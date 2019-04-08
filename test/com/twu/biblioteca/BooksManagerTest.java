@@ -17,6 +17,9 @@ public class BooksManagerTest {
     private String successMessageCheckout = "Thank you! Enjoy the book";
     private String errorMessageCheckout = "Sorry, that book is not available";
 
+    private String successMessageReturn = "Thank you for returning the book";
+    private String errorMessageReturn = "";
+
     public List<Book> books = new ArrayList<>(Arrays.asList(
             new Book("To Kill a Mockingbird", "Harper Lee", 1988),
             new Book("Pride and Prejudice", "Jane Austen", 1813),
@@ -113,7 +116,19 @@ public class BooksManagerTest {
 
         booksManager.showAllBooks();
 
-        assertEquals("2- Pride and Prejudice | Jane Austen | 1813\n" +
+        assertEquals("Thank you for returning the book\n" +
+                "2- Pride and Prejudice | Jane Austen | 1813\n" +
                 "3- The Great Gatsby | F. Scott Fitzgerald | 1925\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAConfirmationMessageIsDisplayedWhenBookReturned() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        BooksManager booksManager = new BooksManager(books);
+        booksManager.returnBook("1");
+
+        assertEquals(successMessageReturn + "\n", out.toString());
     }
 }

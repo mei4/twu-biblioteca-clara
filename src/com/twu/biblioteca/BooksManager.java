@@ -6,8 +6,9 @@ import java.util.stream.IntStream;
 public class BooksManager {
 
     public List<Book> books;
-    public static final String SUCCESS_MESSAGE_CHECKOUT = "Thank you! Enjoy the book";
-    public static final String ERROR_MESSAGE_CHECKOUT = "Sorry, that book is not available";
+    private static final String SUCCESS_MESSAGE_CHECKOUT = "Thank you! Enjoy the book";
+    private static final String ERROR_MESSAGE_CHECKOUT = "Sorry, that book is not available";
+    private static final String SUCCESS_MESSAGE_RETURN = "Thank you for returning the book";
 
     public BooksManager(List<Book> books) {
         this.books = books;
@@ -42,5 +43,6 @@ public class BooksManager {
         int index = Integer.valueOf(bookReference) - 1;
         Book book = books.get(index);
         book.setCheckout(false);
+        System.out.println(SUCCESS_MESSAGE_RETURN);
     }
 }
