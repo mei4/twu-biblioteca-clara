@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MoviesManagerTest {
 
@@ -23,10 +24,17 @@ public class MoviesManagerTest {
         System.setOut(new PrintStream(out));
 
         MoviesManager moviesManager = new MoviesManager(movies);
-        moviesManager.showAllMovies();
+        moviesManager.showAll();
 
         assertEquals("1- Totoro | 1988 | Hayao Miyazaki | 10\n" +
                 "2- The Lion King | 1994 | Rob Minkoff and Roger Allers | 8\n" +
                 "3- Captain Marvel | 2019 | Anna Boden and Ryan Fleck | unrated\n", out.toString());
+    }
+
+    @Test
+    public void checkThatABookCanBeCheckedOut() {
+        MoviesManager moviesManager = new MoviesManager(movies);
+        moviesManager.checkout("1");
+        assertTrue(movies.get(0).isCheckout());
     }
 }

@@ -18,8 +18,10 @@ public class OptionsMenuTest {
     private String option1 = "List of books";
     private String option2 = "Checkout a book";
     private String option3 = "Return a book";
-    private String option4 = "Quit";
-    private String option5 = "List of movies";
+    private String option4 = "List of movies";
+    private String option5 = "Checkout a movie";
+
+    private String option7 = "Quit";
 
     private String errorInvalidOption = "Please select a valid option";
 
@@ -151,8 +153,8 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatABookIsReturnedAfterSelectingTheOption() {
-        booksManager.checkoutBook("1");
-        booksManager.checkoutBook("2");
+        booksManager.checkout("1");
+        booksManager.checkout("2");
         assertTrue(books.get(0).isCheckout());
         assertTrue(books.get(1).isCheckout());
 
@@ -173,7 +175,7 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatTheApplicationIsClosedAfterSelectingTheOption() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4)),
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option7)),
                 booksManager, null);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("4".getBytes());
         System.setIn(byteArrayInputStream);
@@ -184,7 +186,7 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatTheApplicationKeepsShowingTheMenuIfUserDoesNotQuit() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4)),
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option7)),
                 booksManager, null);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("2\n2\n".getBytes());
         System.setIn(byteArrayInputStream);
@@ -201,13 +203,13 @@ public class OptionsMenuTest {
                 "1- " + option1 + "\n" +
                 "2- " + option2 + "\n" +
                 "3- " + option3 + "\n" +
-                "4- " + option4 + "\n", out.toString());
+                "4- " + option7 + "\n", out.toString());
     }
 
     @Test
     public void checkThatAllMoviesAreDisplayedAfterSelectingTheOption() {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
-                option5)), booksManager, moviesManager);
+                option7)), booksManager, moviesManager);
 
         System.setIn(new ByteArrayInputStream("5".getBytes()));
         optionsMenu.showMenu();
@@ -227,5 +229,20 @@ public class OptionsMenuTest {
                 "3- Return a book\n" +
                 "4- Quit\n" +
                 "5- List of movies\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAMovieIsCheckoutAfterSelectingTheOption() {
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
+                option5, option7)), booksManager, moviesManager);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("5\n1".getBytes());
+        System.setIn(byteArrayInputStream);
+
+        optionsMenu.showMenu();
+        optionsMenu.manageOptionSelectedByTheUser();
+
+        assertTrue(movies.get(0).isCheckout());
+        assertFalse(movies.get(1).isCheckout());
+        assertFalse(movies.get(2).isCheckout());
     }
 }

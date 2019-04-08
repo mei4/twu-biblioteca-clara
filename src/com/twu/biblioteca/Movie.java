@@ -1,8 +1,7 @@
 package com.twu.biblioteca;
 
-public class Movie {
+public class Movie extends CatalogElement {
 
-    private String title;
     private int year;
     private String director;
     private int rating; //0: unrated range: from 1-10
@@ -14,6 +13,7 @@ public class Movie {
         this.rating = rating;
     }
 
+    @Override
     public String getDetails() {
         String details = title + " | " + year + " | " + director + " | ";
         details += (rating == 0) ? "unrated" : rating;

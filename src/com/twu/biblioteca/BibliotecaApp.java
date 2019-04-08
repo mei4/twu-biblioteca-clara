@@ -23,11 +23,12 @@ public class BibliotecaApp {
         MoviesManager moviesManager = new MoviesManager(movies);
 
         List<String> options = new ArrayList<>(Arrays.asList(
-                "List of Books",
+                "List of books",
                 "Checkout a book",
                 "Return a book",
-                "Quit",
-                "List of movies"));
+                "List of movies",
+                "Checkout a movie",
+                "Quit"));
 
         OptionsMenu optionsMenu = new OptionsMenu(options, booksManager, moviesManager);
 

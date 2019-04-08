@@ -1,11 +1,9 @@
 package com.twu.biblioteca;
 
-public class Book {
+public class Book extends CatalogElement {
 
-    private String title;
     private String author;
     private int yearPublished;
-    private boolean isCheckout;
 
     public Book(String title, String author, int yearPublished) {
         this.title = title;
@@ -13,15 +11,9 @@ public class Book {
         this.yearPublished = yearPublished;
     }
 
+    @Override
     public String getDetails() {
         return title + " | " + author + " | " + yearPublished;
     }
 
-    public void setCheckout(boolean isCheckout) {
-        this.isCheckout = isCheckout;
-    }
-
-    public boolean isCheckout() {
-        return isCheckout;
-    }
 }

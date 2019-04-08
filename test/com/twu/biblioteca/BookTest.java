@@ -22,7 +22,7 @@ public class BookTest {
     }
 
     @Test
-    public void checkThatABookCanReturned() {
+    public void checkThatABookCanBeReturned() {
         greatGatsby.setCheckout(true);
         assertTrue(greatGatsby.isCheckout());
         greatGatsby.setCheckout(false);

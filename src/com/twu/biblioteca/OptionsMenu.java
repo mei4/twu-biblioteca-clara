@@ -29,23 +29,28 @@ public class OptionsMenu {
                 String optionName = options.get(Integer.valueOf(optionIndex) - 1);
                 switch (optionName) {
                     case "List of books":
-                        booksManager.showAllBooks();
+                        booksManager.showAll();
                         break;
                     case "Checkout a book":
                         System.out.println("Please, type the reference of the book:");
                         String bookReference = scanner.nextLine();
-                        booksManager.checkoutBook(bookReference);
+                        booksManager.checkout(bookReference);
                         break;
                     case "Return a book":
                         System.out.println("Please, type the reference of the book:");
                         bookReference = scanner.nextLine();
-                        booksManager.returnBook(bookReference);
+                        booksManager.returnElement(bookReference);
                         break;
                     case "Quit":
                         System.exit(0);
                         break;
                     case "List of movies":
-                        moviesManager.showAllMovies();
+                        moviesManager.showAll();
+                        break;
+                    case "Checkout a movie":
+                        System.out.println("Please, type the reference of the movie:");
+                        String movieReference = scanner.nextLine();
+                        moviesManager.checkout(movieReference);
                         break;
                 }
                 System.out.println("------------------");
