@@ -9,10 +9,12 @@ public class OptionsMenu {
     public static final String ERROR_INVALID_OPTION = "Please select a valid option";
     private List<String> options;
     private BooksManager booksManager;
+    private MoviesManager moviesManager;
 
-    public OptionsMenu(List<String> options, BooksManager booksManager) {
+    public OptionsMenu(List<String> options, BooksManager booksManager, MoviesManager moviesManager) {
         this.options = options;
         this.booksManager = booksManager;
+        this.moviesManager = moviesManager;
     }
 
     public void showMenu() {
@@ -41,6 +43,9 @@ public class OptionsMenu {
                         break;
                     case "Quit":
                         System.exit(0);
+                        break;
+                    case "List of movies":
+                        moviesManager.showAllMovies();
                         break;
                 }
                 System.out.println("------------------");

@@ -1,13 +1,12 @@
 package com.twu.biblioteca;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BibliotecaApp {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         WelcomeMessage.sayHello();
         List<Book> books = new ArrayList<>(Arrays.asList(
@@ -20,7 +19,7 @@ public class BibliotecaApp {
                 "Checkout a book",
                 "Return a book",
                 "Quit"));
-        OptionsMenu optionsMenu = new OptionsMenu(options, booksManager);
+        OptionsMenu optionsMenu = new OptionsMenu(options, booksManager, null);
 
         optionsMenu.showMenu();
         optionsMenu.manageOptionSelectedByTheUser();
