@@ -18,7 +18,7 @@ public class BooksManagerTest {
     private String errorMessageCheckout = "Sorry, that book is not available";
 
     private String successMessageReturn = "Thank you for returning the book";
-    private String errorMessageReturn = "";
+    private String errorMessageReturn = "That is not a valid book to return";
 
     public List<Book> books = new ArrayList<>(Arrays.asList(
             new Book("To Kill a Mockingbird", "Harper Lee", 1988),
@@ -69,6 +69,18 @@ public class BooksManagerTest {
     }
 
     @Test
+    public void checkThatAnErrorMessageIsDisplayedWhenCheckoutOfUnavailableBook() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        books.get(0).setCheckout(true);
+        BooksManager booksManager = new BooksManager(books);
+        booksManager.checkoutBook("1");
+
+        assertEquals(errorMessageCheckout + "\n", out.toString());
+    }
+
+    @Test
     public void checkThatAnErrorMessageIsDisplayedWhenCheckoutOfAnInvalidReference() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
@@ -80,7 +92,7 @@ public class BooksManagerTest {
     }
 
     @Test
-    public void checkThatAnErrorMessageIsDisplayedWhenReferenceNumberFormatException() {
+    public void checkThatAnErrorMessageIsDisplayedWhenCheckoutReferenceHasNumberFormatException() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
@@ -126,9 +138,43 @@ public class BooksManagerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
+        books.get(0).setCheckout(true);
         BooksManager booksManager = new BooksManager(books);
         booksManager.returnBook("1");
 
         assertEquals(successMessageReturn + "\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAnErrorMessageIsDisplayedWhenReturnOfAnInvalidReference() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        BooksManager booksManager = new BooksManager(books);
+        booksManager.returnBook("11");
+
+        assertEquals(errorMessageReturn + "\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAnErrorMessageIsDisplayedWhenReturnReferenceHasNumberFormatException() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        BooksManager booksManager = new BooksManager(books);
+        booksManager.returnBook("this");
+
+        assertEquals(errorMessageReturn + "\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAnErrorMessageIsDisplayedWhenReturningAvailableBook() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        BooksManager booksManager = new BooksManager(books);
+        booksManager.returnBook("1");
+
+        assertEquals(errorMessageReturn + "\n", out.toString());
     }
 }

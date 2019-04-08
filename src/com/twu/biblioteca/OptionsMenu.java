@@ -1,9 +1,7 @@
 package com.twu.biblioteca;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class OptionsMenu {
@@ -21,27 +19,34 @@ public class OptionsMenu {
         IntStream.range(0, options.size()).forEach(i -> System.out.println(i + 1 + "- " + options.get(i)));
     }
 
-    public void manageOptionSelectedByTheUser() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String optionIndex = reader.readLine();
-        if (isValidOptionInput(optionIndex)) {
-            String optionName = options.get(Integer.valueOf(optionIndex) - 1);
-            switch (optionName) {
-                case "List of books":
-                    booksManager.showAllBooks();
-                    break;
-                case "Checkout a book":
-                    System.out.println("Please, type the reference of the book:");
-                    String bookReference = reader.readLine();
-                    booksManager.checkoutBook(bookReference);
-                    break;
-                case "Return a book":
-                    System.out.println("Please, type the reference of the book:");
-                    bookReference = reader.readLine();
-                    booksManager.returnBook(bookReference);
-                    break;
+    public void manageOptionSelectedByTheUser() {
+        Scanner scanner = new Scanner(System.in);
+        if (scanner.hasNext()) {
+            String optionIndex = scanner.nextLine();
+            if (isValidOptionInput(optionIndex)) {
+                String optionName = options.get(Integer.valueOf(optionIndex) - 1);
+                switch (optionName) {
+                    case "List of books":
+                        booksManager.showAllBooks();
+                        break;
+                    case "Checkout a book":
+                        System.out.println("Please, type the reference of the book:");
+                        String bookReference = scanner.nextLine();
+                        booksManager.checkoutBook(bookReference);
+                        break;
+                    case "Return a book":
+                        System.out.println("Please, type the reference of the book:");
+                        bookReference = scanner.nextLine();
+                        booksManager.returnBook(bookReference);
+                        break;
+                    case "Quit":
+                        System.exit(0);
+                        break;
+                }
+                System.out.println("------------------");
+                showMenu();
+                manageOptionSelectedByTheUser();
             }
-
         }
     }
 
