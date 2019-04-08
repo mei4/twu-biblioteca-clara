@@ -51,7 +51,7 @@ public class BooksManagerTest {
     public void checkThatABookCanBeCheckedOut() {
         BooksManager booksManager = new BooksManager(books);
         booksManager.checkoutBook("1");
-        assertTrue(books.get(0).isCheckedOut());
+        assertTrue(books.get(0).isCheckout());
     }
 
     @Test
@@ -92,12 +92,28 @@ public class BooksManagerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        books.get(1).setCheckedOut(); //Checkout Pride and Prejudice
+        books.get(1).setCheckout(true); //Checkout Pride and Prejudice
 
         BooksManager booksManager = new BooksManager(books);
         booksManager.showAllBooks();
 
         assertEquals("1- To Kill a Mockingbird | Harper Lee | 1988\n" +
+                "3- The Great Gatsby | F. Scott Fitzgerald | 1925\n", out.toString());
+    }
+
+    @Test
+    public void checkThatReturnedBooksAreInTheListOfAllBooks() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        books.get(1).setCheckout(true); //Checkout Pride and Prejudice
+        books.get(0).setCheckout(true);
+        BooksManager booksManager = new BooksManager(books);
+        booksManager.returnBook("2"); //Return Pride and Prejudice
+
+        booksManager.showAllBooks();
+
+        assertEquals("2- Pride and Prejudice | Jane Austen | 1813\n" +
                 "3- The Great Gatsby | F. Scott Fitzgerald | 1925\n", out.toString());
     }
 }

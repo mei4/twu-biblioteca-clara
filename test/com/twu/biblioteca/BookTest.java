@@ -16,8 +16,16 @@ public class BookTest {
 
     @Test
     public void checkThatABookCanBeCheckedOut() {
-        assertFalse(greatGatsby.isCheckedOut());
-        greatGatsby.setCheckedOut();
-        assertTrue(greatGatsby.isCheckedOut());
+        assertFalse(greatGatsby.isCheckout());
+        greatGatsby.setCheckout(true);
+        assertTrue(greatGatsby.isCheckout());
+    }
+
+    @Test
+    public void checkThatABookCanReturned() {
+        greatGatsby.setCheckout(true);
+        assertTrue(greatGatsby.isCheckout());
+        greatGatsby.setCheckout(false);
+        assertFalse(greatGatsby.isCheckout());
     }
 }

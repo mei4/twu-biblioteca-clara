@@ -16,6 +16,7 @@ public class OptionsMenuTest {
 
     private String option1 = "List of books";
     private String option2 = "Checkout a book";
+    private String option3 = "Return a book";
     private String errorInvalidOption = "Please select a valid option";
 
     List<Book> books = new ArrayList<>(Arrays.asList(
@@ -131,8 +132,26 @@ public class OptionsMenuTest {
         optionsMenu.showMenu();
         optionsMenu.manageOptionSelectedByTheUser();
 
-        assertTrue(books.get(0).isCheckedOut());
+        assertTrue(books.get(0).isCheckout());
+        assertFalse(books.get(1).isCheckout());
+        assertFalse(books.get(2).isCheckout());
     }
 
+    @Test
+    public void checkThatABookIsReturnedAfterSelectingTheOption() throws IOException {
+        booksManager.checkoutBook("1");
+        booksManager.checkoutBook("2");
+        assertTrue(books.get(0).isCheckout());
+        assertTrue(books.get(1).isCheckout());
+        
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3)), booksManager);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("3\n2".getBytes());
+        System.setIn(byteArrayInputStream);
+        optionsMenu.showMenu();
+        optionsMenu.manageOptionSelectedByTheUser();
 
+        assertTrue(books.get(0).isCheckout());
+        assertFalse(books.get(1).isCheckout());
+        assertFalse(books.get(2).isCheckout());
+    }
 }

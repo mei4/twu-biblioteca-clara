@@ -35,6 +35,11 @@ public class OptionsMenu {
                     String bookReference = reader.readLine();
                     booksManager.checkoutBook(bookReference);
                     break;
+                case "Return a book":
+                    System.out.println("Please, type the reference of the book:");
+                    bookReference = reader.readLine();
+                    booksManager.returnBook(bookReference);
+                    break;
             }
 
         }

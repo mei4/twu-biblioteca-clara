@@ -1,13 +1,11 @@
 package com.twu.biblioteca;
 
-import com.sun.tools.javac.util.Names;
-
 public class Book {
 
     private String title;
     private String author;
     private int yearPublished;
-    private boolean isCheckedOut;
+    private boolean isCheckout;
 
     public Book(String title, String author, int yearPublished) {
         this.title = title;
@@ -19,11 +17,11 @@ public class Book {
         return title + " | " + author + " | " + yearPublished;
     }
 
-    public void setCheckedOut() {
-        isCheckedOut = true;
+    public void setCheckout(boolean isCheckout) {
+        this.isCheckout = isCheckout;
     }
 
-    public boolean isCheckedOut() {
-        return isCheckedOut;
+    public boolean isCheckout() {
+        return isCheckout;
     }
 }

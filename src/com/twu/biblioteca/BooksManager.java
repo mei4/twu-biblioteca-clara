@@ -14,7 +14,7 @@ public class BooksManager {
     }
 
     public void showAllBooks() {
-        IntStream.range(0, books.size()).filter(i -> !books.get(i).isCheckedOut())
+        IntStream.range(0, books.size()).filter(i -> !books.get(i).isCheckout())
                 .forEach(i -> System.out.println(i + 1 + "- " + books.get(i).getDetails()));
     }
 
@@ -32,9 +32,15 @@ public class BooksManager {
         }
         else {
             Book book = books.get(index);
-            book.setCheckedOut();
+            book.setCheckout(true);
             System.out.println(SUCCESS_MESSAGE_CHECKOUT);
         }
 
+    }
+
+    public void returnBook(String bookReference) {
+        int index = Integer.valueOf(bookReference) - 1;
+        Book book = books.get(index);
+        book.setCheckout(false);
     }
 }
