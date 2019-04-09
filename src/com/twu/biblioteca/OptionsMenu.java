@@ -10,11 +10,13 @@ public class OptionsMenu {
     private List<String> options;
     private BooksManager booksManager;
     private MoviesManager moviesManager;
+    private UserAccountsManager userAccountsManager;
 
-    public OptionsMenu(List<String> options, BooksManager booksManager, MoviesManager moviesManager) {
+    public OptionsMenu(List<String> options, BooksManager booksManager, MoviesManager moviesManager, UserAccountsManager userAccountsManager) {
         this.options = options;
         this.booksManager = booksManager;
         this.moviesManager = moviesManager;
+        this.userAccountsManager = userAccountsManager;
     }
 
     public void showMenu() {
@@ -54,6 +56,14 @@ public class OptionsMenu {
                         break;
                     case "View books checked out":
                         booksManager.showAllCheckedOut();
+                        break;
+                    case "Login":
+                        System.out.println("Library number:");
+                        String libraryNumber = scanner.nextLine();
+                        System.out.println("Password:");
+                        String password = scanner.nextLine();
+                        userAccountsManager.areValidCredentials(libraryNumber,password);
+                        userAccountsManager.logIn(libraryNumber,password);
                         break;
                 }
                 System.out.println("------------------");

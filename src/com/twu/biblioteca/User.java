@@ -11,7 +11,7 @@ public class User {
     }
 
     public boolean isValidPassword(String password) {
-        return password == this.password;
+        return password.equals(this.password);
     }
 
     public String getLibraryNumber() {

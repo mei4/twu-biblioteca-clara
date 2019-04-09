@@ -195,4 +195,9 @@ public class BooksManagerTest {
         assertEquals("1- To Kill a Mockingbird | Harper Lee | 1988 [Checked out by: ABC-1234]\n" +
                 "3- The Great Gatsby | F. Scott Fitzgerald | 1925 [Checked out by: XYZ-4321]\n", out.toString());
     }
+
+    @Test
+    public void checkThatAMessageIsDisplayedWhenUserChecksOutWithoutLoggingIn() {
+
+    }
 }

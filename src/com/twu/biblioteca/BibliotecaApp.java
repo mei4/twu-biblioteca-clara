@@ -28,9 +28,16 @@ public class BibliotecaApp {
                 "Return a book",
                 "List of movies",
                 "Checkout a movie",
+                "View books checked out",
+                "Login",
                 "Quit"));
 
-        OptionsMenu optionsMenu = new OptionsMenu(options, booksManager, moviesManager);
+        List<User> users = new ArrayList<>(Arrays.asList(
+                new User("ABC-1234", "nicePassword"),
+                new User("XYZ-4321", "superNicePassword")));
+        UserAccountsManager userAccountsManager = new UserAccountsManager(users);
+
+        OptionsMenu optionsMenu = new OptionsMenu(options, booksManager, moviesManager, userAccountsManager);
 
         optionsMenu.showMenu();
         optionsMenu.manageOptionSelectedByTheUser();

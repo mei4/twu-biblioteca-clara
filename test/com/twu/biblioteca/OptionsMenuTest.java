@@ -21,7 +21,9 @@ public class OptionsMenuTest {
     private String option4 = "List of movies";
     private String option5 = "Checkout a movie";
     private String option6 = "View books checked out";
-    private String option7 = "Quit";
+    private String option7 = "Login";
+
+    private String option9 = "Quit";
 
     private String errorInvalidOption = "Please select a valid option";
 
@@ -40,9 +42,14 @@ public class OptionsMenuTest {
     User user1 = new User("ABC-1234", "nicePassword");
     User user2 = new User("XYZ-4321", "superNicePassword");
 
+    List<User> users = new ArrayList<>(Arrays.asList(
+            new User("ABC-1234", "nicePassword"),
+            new User("XYZ-4321", "superNicePassword")));
+    UserAccountsManager userAccountsManager = new UserAccountsManager(users);
+
     @Test
     public void checkThatNothingIsShowedWhenEmptyMenu() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(), null, null);
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(), null, null, null);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
@@ -55,7 +62,7 @@ public class OptionsMenuTest {
     @Test
     public void checkThatTheMenuIsPrintedWhenOneOption() {
         List<String> options = new ArrayList<>(Arrays.asList(option1));
-        OptionsMenu optionsMenu = new OptionsMenu(options, null, null);
+        OptionsMenu optionsMenu = new OptionsMenu(options, null, null, null);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
@@ -67,7 +74,7 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatAnErrorMessageIsThrownWhenInvalidOptionSelected() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)), null, null);
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)), null, null, null);
         System.setIn(new ByteArrayInputStream("2".getBytes()));
         optionsMenu.showMenu();
 
@@ -82,7 +89,7 @@ public class OptionsMenuTest {
     @Test
     public void checkThatAnErrorMessageIsNotThrownWhenValidOptionSelected() {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)),
-                new BooksManager(new ArrayList<>()), null);
+                new BooksManager(new ArrayList<>()), null, null);
         System.setIn(new ByteArrayInputStream("1".getBytes()));
         optionsMenu.showMenu();
 
@@ -96,7 +103,7 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatAnErrorMessageIsThrownWhenNumberFormatException() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)), null, null);
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)), null, null, null);
         System.setIn(new ByteArrayInputStream("List of fiction books".getBytes()));
         optionsMenu.showMenu();
 
@@ -110,7 +117,7 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatAllBooksAreDisplayedAfterSelectingTheOption() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)), booksManager, null);
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)), booksManager, null, null);
         System.setIn(new ByteArrayInputStream("1".getBytes()));
         optionsMenu.showMenu();
 
@@ -142,7 +149,7 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatABookIsCheckoutAfterSelectingTheOption() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2)), booksManager, null);
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2)), booksManager, null, null);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("2\n1".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
@@ -161,7 +168,7 @@ public class OptionsMenuTest {
         assertTrue(books.get(1).isCheckout());
 
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3)),
-                booksManager, null);
+                booksManager, null, null);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("3\n2".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
@@ -177,8 +184,8 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatTheApplicationIsClosedAfterSelectingTheOption() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option7)),
-                booksManager, null);
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option9)),
+                booksManager, null, null);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("4".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
@@ -188,8 +195,8 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatTheApplicationKeepsShowingTheMenuIfUserDoesNotQuit() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option7)),
-                booksManager, null);
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option9)),
+                booksManager, null, null);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("2\n2\n".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
@@ -205,13 +212,13 @@ public class OptionsMenuTest {
                 "1- " + option1 + "\n" +
                 "2- " + option2 + "\n" +
                 "3- " + option3 + "\n" +
-                "4- " + option7 + "\n", out.toString());
+                "4- " + option9 + "\n", out.toString());
     }
 
     @Test
     public void checkThatAllMoviesAreDisplayedAfterSelectingTheOption() {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
-                option7)), booksManager, moviesManager);
+                option9)), booksManager, moviesManager, null);
 
         System.setIn(new ByteArrayInputStream("4".getBytes()));
         optionsMenu.showMenu();
@@ -236,7 +243,7 @@ public class OptionsMenuTest {
     @Test
     public void checkThatAMovieIsCheckoutAfterSelectingTheOption() {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
-                option5, option7)), booksManager, moviesManager);
+                option5, option9)), booksManager, moviesManager, null);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("5\n1".getBytes());
         System.setIn(byteArrayInputStream);
 
@@ -254,7 +261,7 @@ public class OptionsMenuTest {
         books.get(2).setCheckout(true, user2);
 
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
-                option5, option6, option7)), booksManager, moviesManager);
+                option5, option6, option9)), booksManager, moviesManager, null);
         System.setIn(new ByteArrayInputStream("6".getBytes()));
         optionsMenu.showMenu();
 
@@ -273,5 +280,32 @@ public class OptionsMenuTest {
                 "5- Checkout a movie\n" +
                 "6- View books checked out\n" +
                 "7- Quit\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAUserIsLoggedInAfterSelectingTheOption() {
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
+                option5, option6, option7, option9)), booksManager, moviesManager, userAccountsManager);
+        System.setIn(new ByteArrayInputStream("7\nABC-1234\nnicePassword".getBytes()));
+
+        optionsMenu.showMenu();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        optionsMenu.manageOptionSelectedByTheUser();
+
+        assertEquals("Library number:\n" +
+                "Password:\n" +
+                "Successful login\n" +
+                "------------------\n" +
+                "1- List of books\n" +
+                "2- Checkout a book\n" +
+                "3- Return a book\n" +
+                "4- List of movies\n" +
+                "5- Checkout a movie\n" +
+                "6- View books checked out\n" +
+                "7- Login\n" +
+                "8- Quit\n", out.toString());
     }
 }
