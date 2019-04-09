@@ -20,4 +20,8 @@ public class UserSession {
     public User getUser() {
         return user;
     }
+
+    public String getUserInformation() {
+        return user.getInformation();
+    }
 }

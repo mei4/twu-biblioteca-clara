@@ -36,4 +36,8 @@ public class UserAccountsManager {
     public User getLoggedUser() {
         return userSession.getUser();
     }
+
+    public void showLoggedUserInformation() {
+        System.out.println(userSession.getUserInformation());
+    }
 }

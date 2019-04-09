@@ -76,6 +76,14 @@ public class OptionsMenu {
                         userAccountsManager.areValidCredentials(libraryNumber,password);
                         userAccountsManager.logIn(libraryNumber,password);
                         break;
+                    case "View my information":
+                        if (userAccountsManager.isLoggedUser()) {
+                            userAccountsManager.showLoggedUserInformation();
+                        }
+                        else {
+                            System.out.println("You have to login to view your information!");
+                        }
+                        break;
                 }
                 System.out.println("------------------");
                 showMenu();

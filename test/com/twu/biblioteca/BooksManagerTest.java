@@ -25,8 +25,8 @@ public class BooksManagerTest {
             new Book("Pride and Prejudice", "Jane Austen", 1813),
             new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925)));
 
-    User user1 = new User("ABC-1234", "nicePassword");
-    User user2 = new User("XYZ-4321", "superNicePassword");
+    User user1 = new User("ABC-1234", "nicePassword", null, null, null);
+    User user2 = new User("XYZ-4321", "superNicePassword", null, null, null);
 
 //    @Test
 //    public void checkThatAllTheBooksAreDisplayed() {

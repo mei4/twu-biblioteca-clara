@@ -23,7 +23,7 @@ public class OptionsMenuTest {
     private String option5 = "Checkout a movie";
     private String option6 = "View books checked out";
     private String option7 = "Login";
-
+    private String option8 = "View my information";
     private String option9 = "Quit";
 
     private String errorInvalidOption = "Please select a valid option";
@@ -40,12 +40,12 @@ public class OptionsMenuTest {
             new Movie("Captain Marvel", 2019, "Anna Boden and Ryan Fleck", 0)));
     MoviesManager moviesManager = new MoviesManager(movies);
 
-    User user1 = new User("ABC-1234", "nicePassword");
-    User user2 = new User("XYZ-4321", "superNicePassword");
+    User user1 = new User("ABC-1234", "nicePassword", null, null, null);
+    User user2 = new User("XYZ-4321", "superNicePassword", null, null, null);
 
     List<User> users = new ArrayList<>(Arrays.asList(
-            new User("ABC-1234", "nicePassword"),
-            new User("XYZ-4321", "superNicePassword")));
+            new User("ABC-1234", "nicePassword", null, null, null),
+            new User("XYZ-4321", "superNicePassword", null, null, null)));
     UserAccountsManager userAccountsManager = new UserAccountsManager(users);
 
     @Before
@@ -357,5 +357,34 @@ public class OptionsMenuTest {
                 "1- List of books\n" +
                 "2- Checkout a book\n" +
                 "3- Return a book\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAMessageIsShownAfterSelectingViewMyInformationWithoutLogin() {
+        UserAccountsManager userAccountsManagerWithoutLogin = new UserAccountsManager(users);
+
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
+                option5, option6, option7, option8, option9)), booksManager, moviesManager, userAccountsManagerWithoutLogin);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("8".getBytes());
+
+        System.setIn(byteArrayInputStream);
+        optionsMenu.showMenu();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        optionsMenu.manageOptionSelectedByTheUser();
+
+        assertEquals("You have to login to view your information!\n" +
+                "------------------\n" +
+                "1- List of books\n" +
+                "2- Checkout a book\n" +
+                "3- Return a book\n" +
+                "4- List of movies\n" +
+                "5- Checkout a movie\n" +
+                "6- View books checked out\n" +
+                "7- Login\n" +
+                "8- View my information\n" +
+                "9- Quit\n", out.toString());
     }
 }

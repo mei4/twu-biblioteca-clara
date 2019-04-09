@@ -30,11 +30,14 @@ public class BibliotecaApp {
                 "Checkout a movie",
                 "View books checked out",
                 "Login",
+                "View my information",
                 "Quit"));
 
         List<User> users = new ArrayList<>(Arrays.asList(
-                new User("ABC-1234", "nicePassword"),
-                new User("XYZ-4321", "superNicePassword")));
+                new User("ABC-1234", "nicePassword",
+                        "Abece", "abc@biblioteca.com", "9876543210"),
+                new User("XYZ-4321", "superNicePassword",
+                        "Xyz", "xyz@biblioteca.com", "99999999")));
         UserAccountsManager userAccountsManager = new UserAccountsManager(users);
 
         OptionsMenu optionsMenu = new OptionsMenu(options, booksManager, moviesManager, userAccountsManager);

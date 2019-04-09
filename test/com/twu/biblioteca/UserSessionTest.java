@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 public class UserSessionTest {
 
-    User user = new User("ABC-1234", "nicePassword");
+    User user = new User("ABC-1234", "nicePassword", null, null, null);
 
     UserSession userSession = new UserSession();
 
