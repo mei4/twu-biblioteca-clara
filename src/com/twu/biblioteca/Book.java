@@ -15,5 +15,4 @@ public class Book extends CatalogElement {
     public String getDetails() {
         return title + " | " + author + " | " + yearPublished;
     }
-
 }

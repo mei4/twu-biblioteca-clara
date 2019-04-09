@@ -4,9 +4,12 @@ public abstract class CatalogElement {
 
     protected String title;
     protected boolean isCheckout;
+    private User userCheckout;
 
-    public void setCheckout(boolean isCheckout) {
+
+    public void setCheckout(boolean isCheckout, User user) {
         this.isCheckout = isCheckout;
+        this.setUserCheckout(user);
     }
 
     public boolean isCheckout() {
@@ -14,4 +17,12 @@ public abstract class CatalogElement {
     }
 
     public abstract String getDetails();
+
+    public String getCheckoutDetails() {
+        return getDetails() + " [Checked out by: " +  userCheckout.getLibraryNumber() + "]";
+    }
+
+    private void setUserCheckout(User user) {
+        userCheckout = user;
+    }
 }

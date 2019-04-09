@@ -17,7 +17,7 @@ public class MovieTest {
     @Test
     public void checkThatMovieCanBeCheckedOut() {
         assertFalse(totoro.isCheckout());
-        totoro.setCheckout(true);
+        totoro.setCheckout(true, null);
         assertTrue(totoro.isCheckout());
     }
 }

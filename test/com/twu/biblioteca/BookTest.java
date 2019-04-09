@@ -17,15 +17,15 @@ public class BookTest {
     @Test
     public void checkThatABookCanBeCheckedOut() {
         assertFalse(greatGatsby.isCheckout());
-        greatGatsby.setCheckout(true);
+        greatGatsby.setCheckout(true, null);
         assertTrue(greatGatsby.isCheckout());
     }
 
     @Test
     public void checkThatABookCanBeReturned() {
-        greatGatsby.setCheckout(true);
+        greatGatsby.setCheckout(true, null);
         assertTrue(greatGatsby.isCheckout());
-        greatGatsby.setCheckout(false);
+        greatGatsby.setCheckout(false, null);
         assertFalse(greatGatsby.isCheckout());
     }
 }

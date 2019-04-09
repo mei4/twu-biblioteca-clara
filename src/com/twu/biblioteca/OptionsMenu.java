@@ -52,6 +52,9 @@ public class OptionsMenu {
                         String movieReference = scanner.nextLine();
                         moviesManager.checkout(movieReference);
                         break;
+                    case "View books checked out":
+                        booksManager.showAllCheckedOut();
+                        break;
                 }
                 System.out.println("------------------");
                 showMenu();

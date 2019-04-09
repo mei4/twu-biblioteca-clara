@@ -20,7 +20,7 @@ public class OptionsMenuTest {
     private String option3 = "Return a book";
     private String option4 = "List of movies";
     private String option5 = "Checkout a movie";
-
+    private String option6 = "View books checked out";
     private String option7 = "Quit";
 
     private String errorInvalidOption = "Please select a valid option";
@@ -37,9 +37,11 @@ public class OptionsMenuTest {
             new Movie("Captain Marvel", 2019, "Anna Boden and Ryan Fleck", 0)));
     MoviesManager moviesManager = new MoviesManager(movies);
 
+    User user1 = new User("ABC-1234", "nicePassword");
+    User user2 = new User("XYZ-4321", "superNicePassword");
+
     @Test
     public void checkThatNothingIsShowedWhenEmptyMenu() {
-        List<String> options = new ArrayList<>();
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(), null, null);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -211,7 +213,7 @@ public class OptionsMenuTest {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
                 option7)), booksManager, moviesManager);
 
-        System.setIn(new ByteArrayInputStream("5".getBytes()));
+        System.setIn(new ByteArrayInputStream("4".getBytes()));
         optionsMenu.showMenu();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -227,8 +229,8 @@ public class OptionsMenuTest {
                 "1- List of books\n" +
                 "2- Checkout a book\n" +
                 "3- Return a book\n" +
-                "4- Quit\n" +
-                "5- List of movies\n", out.toString());
+                "4- List of movies\n" +
+                "5- Quit\n", out.toString());
     }
 
     @Test
@@ -244,5 +246,32 @@ public class OptionsMenuTest {
         assertTrue(movies.get(0).isCheckout());
         assertFalse(movies.get(1).isCheckout());
         assertFalse(movies.get(2).isCheckout());
+    }
+
+    @Test
+    public void checkThatAllCheckedOutBooksAreDisplayedAfterSelectingTheOption() {
+        books.get(0).setCheckout(true, user1);
+        books.get(2).setCheckout(true, user2);
+
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
+                option5, option6, option7)), booksManager, moviesManager);
+        System.setIn(new ByteArrayInputStream("6".getBytes()));
+        optionsMenu.showMenu();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        optionsMenu.manageOptionSelectedByTheUser();
+
+        assertEquals("1- To Kill a Mockingbird | Harper Lee | 1988 [Checked out by: ABC-1234]\n" +
+                "3- The Great Gatsby | F. Scott Fitzgerald | 1925 [Checked out by: XYZ-4321]\n" +
+                "------------------\n" +
+                "1- List of books\n" +
+                "2- Checkout a book\n" +
+                "3- Return a book\n" +
+                "4- List of movies\n" +
+                "5- Checkout a movie\n" +
+                "6- View books checked out\n" +
+                "7- Quit\n", out.toString());
     }
 }

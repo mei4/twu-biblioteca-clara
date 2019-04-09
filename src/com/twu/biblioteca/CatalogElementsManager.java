@@ -9,7 +9,11 @@ public class CatalogElementsManager<T> {
     private String errorMessageCheckout;
     private String successMessageReturn;
     private String errorMessageReturn;
-    private List<CatalogElement> catalogElements;
+    protected List<CatalogElement> catalogElements;
+
+    public CatalogElementsManager (List<T> catalogElements) {
+        this.catalogElements = (List<CatalogElement>) catalogElements;
+    }
 
     public CatalogElementsManager (List<T> catalogElements,
                                    String successMessageCheckout, String errorMessageCheckout,
@@ -34,7 +38,7 @@ public class CatalogElementsManager<T> {
                 System.out.println(errorMessageCheckout);
             }
             else {
-                catalogElement.setCheckout(true);
+                catalogElement.setCheckout(true, null);
                 System.out.println(successMessageCheckout);
             }
         }
@@ -48,7 +52,7 @@ public class CatalogElementsManager<T> {
                 System.out.println(errorMessageReturn);
             }
             else {
-                catalogElement.setCheckout(false);
+                catalogElement.setCheckout(false, null);
                 System.out.println(successMessageReturn);
             }
         }

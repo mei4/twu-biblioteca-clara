@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class BooksManager<T extends CatalogElement> extends CatalogElementsManager<T> {
 
@@ -14,6 +15,11 @@ public class BooksManager<T extends CatalogElement> extends CatalogElementsManag
     public BooksManager(List<Book> books) {
         super((List<T>) books, SUCCESS_MESSAGE_CHECKOUT, ERROR_MESSAGE_CHECKOUT, SUCCESS_MESSAGE_RETURN, ERROR_MESSAGE_RETURN);
         this.books = books;
+    }
+
+    public void showAllCheckedOut() {
+        IntStream.range(0, catalogElements.size()).filter(i -> catalogElements.get(i).isCheckout())
+                .forEach(i -> System.out.println(i + 1 + "- " + catalogElements.get(i).getCheckoutDetails()));
     }
 
 //    public void showAll() {

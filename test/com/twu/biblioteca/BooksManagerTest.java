@@ -25,6 +25,9 @@ public class BooksManagerTest {
             new Book("Pride and Prejudice", "Jane Austen", 1813),
             new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925)));
 
+    User user1 = new User("ABC-1234", "nicePassword");
+    User user2 = new User("XYZ-4321", "superNicePassword");
+
 //    @Test
 //    public void checkThatAllTheBooksAreDisplayed() {
 //        ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -73,7 +76,7 @@ public class BooksManagerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        books.get(0).setCheckout(true);
+        books.get(0).setCheckout(true, null);
         BooksManager booksManager = new BooksManager(books);
         booksManager.checkout("1");
 
@@ -107,7 +110,7 @@ public class BooksManagerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        books.get(1).setCheckout(true); //Checkout Pride and Prejudice
+        books.get(1).setCheckout(true, null); //Checkout Pride and Prejudice
 
         BooksManager booksManager = new BooksManager(books);
         booksManager.showAll();
@@ -121,8 +124,8 @@ public class BooksManagerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        books.get(1).setCheckout(true); //Checkout Pride and Prejudice
-        books.get(0).setCheckout(true);
+        books.get(1).setCheckout(true, null); //Checkout Pride and Prejudice
+        books.get(0).setCheckout(true, null);
         BooksManager booksManager = new BooksManager(books);
         booksManager.returnElement("2"); //Return Pride and Prejudice
 
@@ -138,7 +141,7 @@ public class BooksManagerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        books.get(0).setCheckout(true);
+        books.get(0).setCheckout(true, null);
         BooksManager booksManager = new BooksManager(books);
         booksManager.returnElement("1");
 
@@ -176,5 +179,20 @@ public class BooksManagerTest {
         booksManager.returnElement("1");
 
         assertEquals(errorMessageReturn + "\n", out.toString());
+    }
+
+    @Test
+    public void checkThatCheckoutBooksAreInTheListOfAllCheckoutBooks() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        books.get(0).setCheckout(true, user1); //Checkout To Kill a Mockingbird
+        books.get(2).setCheckout(true, user2); //Checkout The Great Gatsby
+        BooksManager booksManager = new BooksManager(books);
+
+        booksManager.showAllCheckedOut();
+
+        assertEquals("1- To Kill a Mockingbird | Harper Lee | 1988 [Checked out by: ABC-1234]\n" +
+                "3- The Great Gatsby | F. Scott Fitzgerald | 1925 [Checked out by: XYZ-4321]\n", out.toString());
     }
 }

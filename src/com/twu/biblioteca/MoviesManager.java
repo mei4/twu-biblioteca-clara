@@ -7,7 +7,7 @@ public class MoviesManager<T extends CatalogElement> extends CatalogElementsMana
     private List<Movie> movies;
 
     public MoviesManager(List<Movie> movies) {
-        super((List<T>) movies, "", "", "", "");
+        super((List<T>) movies);
         this.movies = movies;
     }
 
