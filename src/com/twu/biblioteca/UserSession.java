@@ -16,4 +16,8 @@ public class UserSession {
         this.isLoggedIn = true;
         this.user = user;
     }
+
+    public User getUser() {
+        return user;
+    }
 }

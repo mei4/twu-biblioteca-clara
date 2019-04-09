@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
@@ -46,6 +47,11 @@ public class OptionsMenuTest {
             new User("ABC-1234", "nicePassword"),
             new User("XYZ-4321", "superNicePassword")));
     UserAccountsManager userAccountsManager = new UserAccountsManager(users);
+
+    @Before
+    public void initialize() {
+        userAccountsManager.logIn("XYZ-4321", "superNicePassword");
+    }
 
     @Test
     public void checkThatNothingIsShowedWhenEmptyMenu() {
@@ -149,7 +155,8 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatABookIsCheckoutAfterSelectingTheOption() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2)), booksManager, null, null);
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2)), booksManager,
+                null, userAccountsManager);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("2\n1".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
@@ -162,13 +169,13 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatABookIsReturnedAfterSelectingTheOption() {
-        booksManager.checkout("1");
-        booksManager.checkout("2");
+        booksManager.checkout("1", null);
+        booksManager.checkout("2", null);
         assertTrue(books.get(0).isCheckout());
         assertTrue(books.get(1).isCheckout());
 
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3)),
-                booksManager, null, null);
+                booksManager, null, userAccountsManager);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("3\n2".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
@@ -196,7 +203,7 @@ public class OptionsMenuTest {
     @Test
     public void checkThatTheApplicationKeepsShowingTheMenuIfUserDoesNotQuit() {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option9)),
-                booksManager, null, null);
+                booksManager, null, userAccountsManager);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("2\n2\n".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
@@ -307,5 +314,48 @@ public class OptionsMenuTest {
                 "6- View books checked out\n" +
                 "7- Login\n" +
                 "8- Quit\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAMessageIsShownAfterSelectingTheCheckoutBookOptionWithoutLogin() {
+        UserAccountsManager userAccountsManagerWithoutLogin = new UserAccountsManager(users);
+
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2)),
+                booksManager, moviesManager, userAccountsManagerWithoutLogin);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("2".getBytes());
+        System.setIn(byteArrayInputStream);
+        optionsMenu.showMenu();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        optionsMenu.manageOptionSelectedByTheUser();
+
+        assertEquals("You have to login before checking out a book!\n" +
+                "------------------\n" +
+                "1- List of books\n" +
+                "2- Checkout a book\n", out.toString());
+    }
+
+    @Test
+    public void checkThatAMessageIsShownAfterSelectingTheReturnBookOptionWithoutLogin() {
+        UserAccountsManager userAccountsManagerWithoutLogin = new UserAccountsManager(users);
+
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3)),
+                booksManager, moviesManager, userAccountsManagerWithoutLogin);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("3".getBytes());
+        System.setIn(byteArrayInputStream);
+        optionsMenu.showMenu();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        optionsMenu.manageOptionSelectedByTheUser();
+
+        assertEquals("You have to login before returning out a book!\n" +
+                "------------------\n" +
+                "1- List of books\n" +
+                "2- Checkout a book\n" +
+                "3- Return a book\n", out.toString());
     }
 }

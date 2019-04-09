@@ -25,7 +25,15 @@ public class UserAccountsManager {
         else System.out.println("Wrong credentials");
     }
 
+    public boolean isLoggedUser () {
+        return userSession.isLoggedIn();
+    }
+
     private User getUserByLibraryNumber(String libraryNumber) {
         return users.stream().filter(user -> user.getLibraryNumber().equals(libraryNumber)).findFirst().get();
+    }
+
+    public User getLoggedUser() {
+        return userSession.getUser();
     }
 }

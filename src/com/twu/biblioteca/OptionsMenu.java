@@ -34,14 +34,25 @@ public class OptionsMenu {
                         booksManager.showAll();
                         break;
                     case "Checkout a book":
-                        System.out.println("Please, type the reference of the book:");
-                        String bookReference = scanner.nextLine();
-                        booksManager.checkout(bookReference);
+                        String bookReference;
+                        if (userAccountsManager.isLoggedUser()) {
+                            System.out.println("Please, type the reference of the book:");
+                            bookReference = scanner.nextLine();
+                            booksManager.checkout(bookReference, userAccountsManager.getLoggedUser());
+                        }
+                        else {
+                            System.out.println("You have to login before checking out a book!");
+                        }
                         break;
                     case "Return a book":
-                        System.out.println("Please, type the reference of the book:");
-                        bookReference = scanner.nextLine();
-                        booksManager.returnElement(bookReference);
+                        if (userAccountsManager.isLoggedUser()) {
+                            System.out.println("Please, type the reference of the book:");
+                            bookReference = scanner.nextLine();
+                            booksManager.returnElement(bookReference, userAccountsManager.getLoggedUser());
+                        }
+                        else {
+                            System.out.println("You have to login before returning out a book!");
+                        }
                         break;
                     case "Quit":
                         System.exit(0);
@@ -52,7 +63,7 @@ public class OptionsMenu {
                     case "Checkout a movie":
                         System.out.println("Please, type the reference of the movie:");
                         String movieReference = scanner.nextLine();
-                        moviesManager.checkout(movieReference);
+                        moviesManager.checkout(movieReference, null);
                         break;
                     case "View books checked out":
                         booksManager.showAllCheckedOut();

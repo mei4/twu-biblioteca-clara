@@ -56,7 +56,7 @@ public class BooksManagerTest {
     @Test
     public void checkThatABookCanBeCheckedOut() {
         BooksManager booksManager = new BooksManager(books);
-        booksManager.checkout("1");
+        booksManager.checkout("1", null);
         assertTrue(books.get(0).isCheckout());
     }
 
@@ -66,7 +66,7 @@ public class BooksManagerTest {
         System.setOut(new PrintStream(out));
 
         BooksManager booksManager = new BooksManager(books);
-        booksManager.checkout("1");
+        booksManager.checkout("1", null);
 
         assertEquals(successMessageCheckout + "\n", out.toString());
     }
@@ -78,7 +78,7 @@ public class BooksManagerTest {
 
         books.get(0).setCheckout(true, null);
         BooksManager booksManager = new BooksManager(books);
-        booksManager.checkout("1");
+        booksManager.checkout("1", null);
 
         assertEquals(errorMessageCheckout + "\n", out.toString());
     }
@@ -89,7 +89,7 @@ public class BooksManagerTest {
         System.setOut(new PrintStream(out));
 
         BooksManager booksManager = new BooksManager(books);
-        booksManager.checkout("11");
+        booksManager.checkout("11", null);
 
         assertEquals(errorMessageCheckout + "\n", out.toString());
     }
@@ -100,7 +100,7 @@ public class BooksManagerTest {
         System.setOut(new PrintStream(out));
 
         BooksManager booksManager = new BooksManager(books);
-        booksManager.checkout("this");
+        booksManager.checkout("this", null);
 
         assertEquals(errorMessageCheckout + "\n", out.toString());
     }
@@ -127,7 +127,7 @@ public class BooksManagerTest {
         books.get(1).setCheckout(true, null); //Checkout Pride and Prejudice
         books.get(0).setCheckout(true, null);
         BooksManager booksManager = new BooksManager(books);
-        booksManager.returnElement("2"); //Return Pride and Prejudice
+        booksManager.returnElement("2", null); //Return Pride and Prejudice
 
         booksManager.showAll();
 
@@ -143,7 +143,7 @@ public class BooksManagerTest {
 
         books.get(0).setCheckout(true, null);
         BooksManager booksManager = new BooksManager(books);
-        booksManager.returnElement("1");
+        booksManager.returnElement("1", null);
 
         assertEquals(successMessageReturn + "\n", out.toString());
     }
@@ -154,7 +154,7 @@ public class BooksManagerTest {
         System.setOut(new PrintStream(out));
 
         BooksManager booksManager = new BooksManager(books);
-        booksManager.returnElement("11");
+        booksManager.returnElement("11", null);
 
         assertEquals(errorMessageReturn + "\n", out.toString());
     }
@@ -165,7 +165,7 @@ public class BooksManagerTest {
         System.setOut(new PrintStream(out));
 
         BooksManager booksManager = new BooksManager(books);
-        booksManager.returnElement("this");
+        booksManager.returnElement("this", null);
 
         assertEquals(errorMessageReturn + "\n", out.toString());
     }
@@ -176,7 +176,7 @@ public class BooksManagerTest {
         System.setOut(new PrintStream(out));
 
         BooksManager booksManager = new BooksManager(books);
-        booksManager.returnElement("1");
+        booksManager.returnElement("1", null);
 
         assertEquals(errorMessageReturn + "\n", out.toString());
     }

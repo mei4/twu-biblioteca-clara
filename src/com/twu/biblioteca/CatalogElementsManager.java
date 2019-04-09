@@ -30,7 +30,7 @@ public class CatalogElementsManager<T> {
                 .forEach(i -> System.out.println(i + 1 + "- " + catalogElements.get(i).getDetails()));
     }
 
-    public void checkout(String bookReference) {
+    public void checkout(String bookReference, User loggedUser) {
         if (isValidReference(bookReference, errorMessageCheckout)) {
             int index = Integer.valueOf(bookReference) - 1;
             CatalogElement catalogElement = catalogElements.get(index);
@@ -38,13 +38,13 @@ public class CatalogElementsManager<T> {
                 System.out.println(errorMessageCheckout);
             }
             else {
-                catalogElement.setCheckout(true, null);
+                catalogElement.setCheckout(true, loggedUser);
                 System.out.println(successMessageCheckout);
             }
         }
     }
 
-    public void returnElement(String bookReference) {
+    public void returnElement(String bookReference, User loggedUser) {
         if (isValidReference(bookReference, errorMessageReturn)) {
             int index = Integer.valueOf(bookReference) - 1;
             CatalogElement catalogElement = catalogElements.get(index);

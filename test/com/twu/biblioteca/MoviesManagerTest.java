@@ -34,7 +34,7 @@ public class MoviesManagerTest {
     @Test
     public void checkThatABookCanBeCheckedOut() {
         MoviesManager moviesManager = new MoviesManager(movies);
-        moviesManager.checkout("1");
+        moviesManager.checkout("1", null);
         assertTrue(movies.get(0).isCheckout());
     }
 }
