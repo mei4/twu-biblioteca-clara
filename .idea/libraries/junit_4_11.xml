@@ -2,9 +2,12 @@
   <library name="junit-4.11">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/junit-4.11.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../system-rules-1.19.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/system-rules-1.19.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mockito-all-1.10.19.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/mockito-all-1.10.19.jar!/" />
+    </SOURCES>
   </library>
 </component>
