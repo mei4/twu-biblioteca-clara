@@ -4,6 +4,7 @@ import com.twu.biblioteca.catalogElement.user.User;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class CatalogElementsManager<T> {
@@ -64,8 +65,10 @@ public class CatalogElementsManager<T> {
         }
     }
 
-    public List<T> getAll() {
-        return catalogElements;
+    public List<T> getAllAvailable() {
+        return catalogElements.stream()
+                .filter(catalogElement -> ((CatalogElement)catalogElement).isCheckout())
+                .collect(Collectors.toList());
     }
 
     public T getByReference(String reference) {

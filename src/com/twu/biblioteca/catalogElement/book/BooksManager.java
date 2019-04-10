@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 public class BooksManager<T extends CatalogElement> extends CatalogElementsManager<T> {
 
-    public List<Book> books;
+    public List<Book> books; //TODO: delete
     //TODO: delete
     private static final String SUCCESS_MESSAGE_CHECKOUT = "Thank you! Enjoy the book";
     private static final String ERROR_MESSAGE_CHECKOUT = "Sorry, that book is not available";
@@ -17,8 +17,8 @@ public class BooksManager<T extends CatalogElement> extends CatalogElementsManag
 
 
     public BooksManager(List<Book> books) {
-        super((List<T>) books, SUCCESS_MESSAGE_CHECKOUT, ERROR_MESSAGE_CHECKOUT, SUCCESS_MESSAGE_RETURN, ERROR_MESSAGE_RETURN);
-        this.books = books;
+        super((List<T>) books, SUCCESS_MESSAGE_CHECKOUT, ERROR_MESSAGE_CHECKOUT, SUCCESS_MESSAGE_RETURN, ERROR_MESSAGE_RETURN); //TODO: change constructor
+        this.books = books; //TODO: delete
     }
 
     //TODO: delete

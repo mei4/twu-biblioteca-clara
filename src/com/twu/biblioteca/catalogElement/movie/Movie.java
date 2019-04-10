@@ -9,6 +9,7 @@ public class Movie extends CatalogElement {
     private int rating; //0: unrated range: from 1-10
 
     public Movie(String title, int year, String director, int rating) {
+        super();
         this.title = title;
         this.year = year;
         this.director = director;

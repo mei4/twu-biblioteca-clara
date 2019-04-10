@@ -9,6 +9,21 @@ public abstract class CatalogElement {
     private User userCheckout;
     private String userWhoCheckedOut;
 
+    private String successMessageCheckout;
+    private String errorMessageCheckout;
+    private String successMessageReturn;
+    private String errorMessageReturn;
+
+    public CatalogElement() {}
+
+    public CatalogElement(String successMessageCheckout, String errorMessageCheckout,
+                          String successMessageReturn, String errorMessageReturn) {
+        this.successMessageCheckout = successMessageCheckout;
+        this.errorMessageCheckout = errorMessageCheckout;
+        this.successMessageReturn = successMessageReturn;
+        this.errorMessageReturn = errorMessageReturn;
+    }
+
     //TODO: delete
     public void setCheckout(boolean isCheckout, User user) {
         this.isCheckout = isCheckout;
@@ -34,11 +49,11 @@ public abstract class CatalogElement {
 
     public void checkout(String libraryNumber) {
         if (isCheckout) {
-            throw new CannotCheckOutCatalogElement();
+            throw new CannotCheckOutCatalogElement(errorMessageCheckout);
         }
         isCheckout = true;
         userWhoCheckedOut = libraryNumber;
-        System.out.println("Thank you! Enjoy the book");
+        System.out.println(successMessageCheckout);
     }
 
     public String getLibraryNumberCheckout() {
@@ -47,11 +62,11 @@ public abstract class CatalogElement {
 
     public void returnCatalogElement() {
         if (!isCheckout) {
-            throw new CannotReturnCatalogElement();
+            throw new CannotReturnCatalogElement(errorMessageReturn);
         }
         isCheckout = false;
         userWhoCheckedOut = null;
-        System.out.println("Thank you for returning the book");
+        System.out.println(successMessageReturn);
     }
 
     public String getTitle() {
