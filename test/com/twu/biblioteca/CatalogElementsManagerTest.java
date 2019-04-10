@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -16,14 +17,16 @@ import static org.mockito.Mockito.when;
 
 public class CatalogElementsManagerTest {
 
-    private CatalogElement mockedBook;
+    private CatalogElement mockedBook1;
+    private CatalogElement mockedBook2;
     private List<CatalogElement> mockedCatalogElements;
     private CatalogElementsManager catalogElementsManager;
     private String errorMessageInvalid = "Reference not valid";
 
     @Before
     public void initialize() {
-        mockedBook = mock(Book.class);
+        mockedBook1 = mock(Book.class);
+        mockedBook2 = mock(Book.class);
         mockedCatalogElements = mock(List.class);
         catalogElementsManager = new CatalogElementsManager(mockedCatalogElements);
     }
@@ -35,9 +38,9 @@ public class CatalogElementsManagerTest {
 
     @Test
     public void checkThatTheCatalogElementIsReturnedWhenFindByReference() {
-        when(mockedCatalogElements.get(0)).thenReturn(mockedBook);
+        when(mockedCatalogElements.get(0)).thenReturn(mockedBook1);
         when(mockedCatalogElements.size()).thenReturn(1);
-        assertEquals(catalogElementsManager.getByReference("1"), mockedBook);
+        assertEquals(catalogElementsManager.getByReference("1"), mockedBook1);
     }
 
     @Test
@@ -58,6 +61,18 @@ public class CatalogElementsManagerTest {
         catalogElementsManager.getByReference("a");
 
         assertEquals(errorMessageInvalid + "\n", out.toString());
+    }
+
+    @Test
+    public void checkThatOnlyCheckedOutCatalogElementsAreReturned() {
+        when(mockedBook1.isCheckout()).thenReturn(false);
+        when(mockedBook2.isCheckout()).thenReturn(true);
+        when(mockedCatalogElements.get(0)).thenReturn(mockedBook1);
+        when(mockedCatalogElements.get(1)).thenReturn(mockedBook2);
+        when(mockedCatalogElements.size()).thenReturn(2);
+
+        assertEquals(catalogElementsManager.getAllCheckedOut(),
+                new HashMap<Integer,CatalogElement>() {{put(2, mockedBook2);}});
     }
 
 }

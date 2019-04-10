@@ -2,6 +2,7 @@ package com.twu.biblioteca.catalogElement;
 
 import com.twu.biblioteca.catalogElement.user.User;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -63,6 +64,25 @@ public class CatalogElementsManager<T> {
         }
     }
 
+    public List<T> getAll() {
+        return catalogElements;
+    }
+
+    public T getByReference(String reference) {
+        if (isValidReference(reference, "Reference not valid")) {
+            return catalogElements.get(Integer.valueOf(reference) - 1);
+        }
+        return null;
+    }
+
+    public HashMap<Integer, T> getAllCheckedOut() {
+        HashMap<Integer, T> checkedOutElements = new HashMap<>();
+        IntStream.range(0, catalogElements.size())
+                .filter(i -> ((CatalogElement)catalogElements.get(i)).isCheckout())
+                .forEach(i -> checkedOutElements.put(new Integer(i + 1), catalogElements.get(i)));
+        return checkedOutElements;
+    }
+
     private boolean isValidReference(String bookReference, String errorMessage) {
         int index = 0;
         try {
@@ -77,16 +97,5 @@ public class CatalogElementsManager<T> {
             return false;
         }
         return true;
-    }
-
-    public List<T> getAll() {
-        return catalogElements;
-    }
-
-    public T getByReference(String reference) {
-        if (isValidReference(reference, "Reference not valid")) {
-            return catalogElements.get(Integer.valueOf(reference) - 1);
-        }
-        return null;
     }
 }
