@@ -1,11 +1,11 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.catalogElement.user;
 
 import java.util.List;
 
 public class UserAccountsManager {
 
-    public List<User> users;
-    UserSession userSession = new UserSession();
+    private List<User> users;
+    private UserSession userSession = new UserSession();
 
     public UserAccountsManager(List<User> users) {
         this.users = users;

@@ -1,4 +1,6 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.catalogElement.movie;
+
+import com.twu.biblioteca.catalogElement.CatalogElement;
 
 public class Movie extends CatalogElement {
 
@@ -13,10 +15,23 @@ public class Movie extends CatalogElement {
         this.rating = rating;
     }
 
+    //TODO: delete
     @Override
     public String getDetails() {
         String details = title + " | " + year + " | " + director + " | ";
         details += (rating == 0) ? "unrated" : rating;
         return details;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public int getRating() {
+        return rating;
     }
 }

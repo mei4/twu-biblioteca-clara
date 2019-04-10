@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.catalogElement.movie.Movie;
+import com.twu.biblioteca.catalogElement.movie.MoviesManager;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;

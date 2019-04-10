@@ -1,5 +1,11 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.catalogElement.book.Book;
+import com.twu.biblioteca.catalogElement.book.BooksManager;
+import com.twu.biblioteca.catalogElement.movie.Movie;
+import com.twu.biblioteca.catalogElement.movie.MoviesManager;
+import com.twu.biblioteca.catalogElement.user.User;
+import com.twu.biblioteca.catalogElement.user.UserAccountsManager;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

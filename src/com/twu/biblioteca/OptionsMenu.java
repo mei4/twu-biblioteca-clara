@@ -1,5 +1,9 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.catalogElement.book.BooksManager;
+import com.twu.biblioteca.catalogElement.movie.MoviesManager;
+import com.twu.biblioteca.catalogElement.user.UserAccountsManager;
+
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;

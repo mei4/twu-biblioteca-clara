@@ -1,4 +1,6 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.catalogElement;
+
+import com.twu.biblioteca.catalogElement.user.User;
 
 import java.util.List;
 import java.util.stream.IntStream;

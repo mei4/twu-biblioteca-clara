@@ -1,6 +1,9 @@
 package com.twu.biblioteca;
 
 
+import com.twu.biblioteca.catalogElement.book.Book;
+import com.twu.biblioteca.catalogElement.book.BooksManager;
+import com.twu.biblioteca.catalogElement.user.User;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -27,18 +30,6 @@ public class BooksManagerTest {
 
     User user1 = new User("ABC-1234", "nicePassword", null, null, null);
     User user2 = new User("XYZ-4321", "superNicePassword", null, null, null);
-
-//    @Test
-//    public void checkThatAllTheBooksAreDisplayed() {
-//        ByteArrayOutputStream out = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(out));
-//
-//        BooksManager booksManager = new BooksManager(books);
-//        booksManager.showAll();
-//
-//        assertEquals(books + "\n", out.toString());
-//
-//    }
 
     @Test
     public void checkThatAllTheBooksAndTheirAuthorsAreDisplayed() {

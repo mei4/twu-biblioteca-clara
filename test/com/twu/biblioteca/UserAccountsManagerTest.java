@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.catalogElement.user.User;
+import com.twu.biblioteca.catalogElement.user.UserAccountsManager;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
