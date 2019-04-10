@@ -82,4 +82,11 @@ public class CatalogElementsManager<T> {
     public List<T> getAll() {
         return catalogElements;
     }
+
+    public T getByReference(String reference) {
+        if (isValidReference(reference, "Reference not valid")) {
+            return catalogElements.get(Integer.valueOf(reference) - 1);
+        }
+        return null;
+    }
 }
