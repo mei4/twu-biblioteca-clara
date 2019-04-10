@@ -3,11 +3,7 @@ package com.twu.biblioteca;
 import com.twu.biblioteca.catalogElement.book.Book;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 public class BookTest {
 
@@ -40,17 +36,6 @@ public class BookTest {
         assertEquals(greatGatsby.getTitle(), "The Great Gatsby");
         assertEquals(greatGatsby.getAuthor(), "F. Scott Fitzgerald");
         assertEquals(greatGatsby.getYearPublished(), 1925);
-
-        // mock creation
-        List mockedList = mock(List.class);
-
-// using mock object - it does not throw any "unexpected interaction" exception
-        mockedList.add("one");
-        mockedList.clear();
-
-        // selective, explicit, highly readable verification
-        verify(mockedList).add("one");
-        verify(mockedList).clear();
     }
 
 

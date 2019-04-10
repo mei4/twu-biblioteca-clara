@@ -11,50 +11,53 @@ public class CatalogElementsManager<T> {
     private String errorMessageCheckout;
     private String successMessageReturn;
     private String errorMessageReturn;
-    protected List<CatalogElement> catalogElements;
+    protected List<T> catalogElements;
 
     public CatalogElementsManager (List<T> catalogElements) {
-        this.catalogElements = (List<CatalogElement>) catalogElements;
+        this.catalogElements = catalogElements;
     }
 
     public CatalogElementsManager (List<T> catalogElements,
                                    String successMessageCheckout, String errorMessageCheckout,
                                    String successMessageReturn, String errorMessageReturn) {
-        this.catalogElements = (List<CatalogElement>) catalogElements;
+        this.catalogElements = catalogElements;
         this.successMessageCheckout = successMessageCheckout;
         this.errorMessageCheckout = errorMessageCheckout;
         this.successMessageReturn = successMessageReturn;
         this.errorMessageReturn = errorMessageReturn;
     }
 
+    //TODO: delete
     public void showAll() {
-        IntStream.range(0, catalogElements.size()).filter(i -> !catalogElements.get(i).isCheckout())
-                .forEach(i -> System.out.println(i + 1 + "- " + catalogElements.get(i).getDetails()));
+        IntStream.range(0, catalogElements.size()).filter(i -> !((CatalogElement)catalogElements.get(i)).isCheckout())
+                .forEach(i -> System.out.println(i + 1 + "- " + ((CatalogElement)catalogElements.get(i)).getDetails()));
     }
 
+    //TODO: delete
     public void checkout(String bookReference, User loggedUser) {
         if (isValidReference(bookReference, errorMessageCheckout)) {
             int index = Integer.valueOf(bookReference) - 1;
-            CatalogElement catalogElement = catalogElements.get(index);
-            if (catalogElement.isCheckout()) {
+            T catalogElement = catalogElements.get(index);
+            if (((CatalogElement) catalogElement).isCheckout()) {
                 System.out.println(errorMessageCheckout);
             }
             else {
-                catalogElement.setCheckout(true, loggedUser);
+                ((CatalogElement) catalogElement).setCheckout(true, loggedUser);
                 System.out.println(successMessageCheckout);
             }
         }
     }
 
+    //TODO: delete
     public void returnElement(String bookReference, User loggedUser) {
         if (isValidReference(bookReference, errorMessageReturn)) {
             int index = Integer.valueOf(bookReference) - 1;
-            CatalogElement catalogElement = catalogElements.get(index);
-            if (!catalogElement.isCheckout()) {
+            T catalogElement = catalogElements.get(index);
+            if (!((CatalogElement)catalogElement).isCheckout()) {
                 System.out.println(errorMessageReturn);
             }
             else {
-                catalogElement.setCheckout(false, null);
+                ((CatalogElement)catalogElement).setCheckout(false, null);
                 System.out.println(successMessageReturn);
             }
         }
@@ -74,5 +77,9 @@ public class CatalogElementsManager<T> {
             return false;
         }
         return true;
+    }
+
+    public List<T> getAll() {
+        return catalogElements;
     }
 }

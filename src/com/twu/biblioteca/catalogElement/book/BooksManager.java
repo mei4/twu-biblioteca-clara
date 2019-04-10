@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 public class BooksManager<T extends CatalogElement> extends CatalogElementsManager<T> {
 
     public List<Book> books;
+    //TODO: delete
     private static final String SUCCESS_MESSAGE_CHECKOUT = "Thank you! Enjoy the book";
     private static final String ERROR_MESSAGE_CHECKOUT = "Sorry, that book is not available";
     private static final String SUCCESS_MESSAGE_RETURN = "Thank you for returning the book";
@@ -20,6 +21,7 @@ public class BooksManager<T extends CatalogElement> extends CatalogElementsManag
         this.books = books;
     }
 
+    //TODO: delete
     public void showAllCheckedOut() {
         IntStream.range(0, catalogElements.size()).filter(i -> catalogElements.get(i).isCheckout())
                 .forEach(i -> System.out.println(i + 1 + "- " + catalogElements.get(i).getCheckoutDetails()));
