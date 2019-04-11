@@ -1,7 +1,5 @@
 package com.twu.biblioteca.catalogElement;
 
-import com.twu.biblioteca.catalogElement.CatalogElement;
-import com.twu.biblioteca.catalogElement.CatalogElementsManager;
 import com.twu.biblioteca.catalogElement.book.Book;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +19,7 @@ public class CatalogElementsManagerTest {
 
     private CatalogElement mockedBook1;
     private CatalogElement mockedBook2;
-    private List<CatalogElement> mockedCatalogElements;
+    private List<CatalogElement> catalogElements;
     private CatalogElementsManager catalogElementsManager;
     private String errorMessageInvalid = "Reference not valid";
 
@@ -29,15 +27,17 @@ public class CatalogElementsManagerTest {
     public void initialize() {
         mockedBook1 = mock(Book.class);
         mockedBook2 = mock(Book.class);
-        mockedCatalogElements = new ArrayList(Arrays.asList(mockedBook1, mockedBook2));
-        catalogElementsManager = new CatalogElementsManager(mockedCatalogElements);
+        catalogElements = new ArrayList(Arrays.asList(mockedBook1, mockedBook2));
+        catalogElementsManager = new CatalogElementsManager(catalogElements);
     }
 
     @Test
     public void checkThatAllAvailableCatalogElementsAreReturned() {
         when(mockedBook1.isCheckout()).thenReturn(false);
         when(mockedBook2.isCheckout()).thenReturn(true);
-        assertEquals(catalogElementsManager.getAllAvailable(), new ArrayList(Arrays.asList(mockedBook2)));
+
+        assertEquals(catalogElementsManager.getAllAvailable(),
+                new HashMap<Integer,CatalogElement>() {{put(1, mockedBook1);}});
     }
 
     @Test
@@ -69,9 +69,6 @@ public class CatalogElementsManagerTest {
     public void checkThatOnlyCheckedOutCatalogElementsAreReturned() {
         when(mockedBook1.isCheckout()).thenReturn(false);
         when(mockedBook2.isCheckout()).thenReturn(true);
-        when(mockedCatalogElements.get(0)).thenReturn(mockedBook1);
-        when(mockedCatalogElements.get(1)).thenReturn(mockedBook2);
-        when(mockedCatalogElements.size()).thenReturn(2);
 
         assertEquals(catalogElementsManager.getAllCheckedOut(),
                 new HashMap<Integer,CatalogElement>() {{put(2, mockedBook2);}});

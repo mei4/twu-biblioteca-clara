@@ -1,9 +1,13 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.catalogElement.book.Book;
 import com.twu.biblioteca.catalogElement.book.BooksManager;
+import com.twu.biblioteca.catalogElement.movie.Movie;
 import com.twu.biblioteca.catalogElement.movie.MoviesManager;
+import com.twu.biblioteca.user.User;
 import com.twu.biblioteca.user.UserAccountsManager;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -35,50 +39,59 @@ public class OptionsMenu {
                 String optionName = options.get(Integer.valueOf(optionIndex) - 1);
                 switch (optionName) {
                     case "List of books":
-
-                        booksManager.getAllAvailable();
+                        HashMap<Integer, Book> availableBooks = (HashMap<Integer, Book>) booksManager.getAllAvailable();
+                        availableBooks.forEach((i, book) -> {
+                            String bookDetails = String.format(
+                                    "%d- %s | %s | %d", i, book.getTitle(), book.getAuthor(), book.getYearPublished());
+                            System.out.println(bookDetails);
+                        });
                         break;
                     case "Checkout a book":
                         String bookReference;
-                        if (userAccountsManager.isLoggedUser()) {
-                            System.out.println("Please, type the reference of the book:");
-                            bookReference = scanner.nextLine();
-                            booksManager.checkout(bookReference, userAccountsManager.getLoggedUser());
-                        }
-                        else {
-                            System.out.println("You have to login before checking out a book!");
-                        }
+                        User user = userAccountsManager.getLoggedUser();
+                        System.out.println("Please, type the reference of the book:");
+                        bookReference = scanner.nextLine();
+                        booksManager.checkout(bookReference, user);
                         break;
                     case "Return a book":
-                        if (userAccountsManager.isLoggedUser()) {
-                            System.out.println("Please, type the reference of the book:");
-                            bookReference = scanner.nextLine();
-                            booksManager.returnElement(bookReference, userAccountsManager.getLoggedUser());
-                        }
-                        else {
-                            System.out.println("You have to login before returning out a book!");
-                        }
+                        userAccountsManager.getLoggedUser(); //checks if logged user
+                        System.out.println("Please, type the reference of the book:");
+                        bookReference = scanner.nextLine();
+                        booksManager.returnElement(bookReference);
                         break;
                     case "Quit":
                         System.exit(0);
                         break;
                     case "List of movies":
-                        moviesManager.showAll();
+                        HashMap<Integer, Movie> movies = (HashMap<Integer, Movie>) moviesManager.getAllAvailable();
+                        movies.forEach((i, movie) -> {
+                            String movieDetails = String.format(
+                                    "%d- %s | %d | %s | %s",
+                                    i, movie.getTitle(), movie.getYear(), movie.getDirector(),
+                                    movie.getRating() == 0 ? "unrated" : movie.getRating());
+                            System.out.println(movieDetails);
+                        });
                         break;
                     case "Checkout a movie":
                         System.out.println("Please, type the reference of the movie:");
                         String movieReference = scanner.nextLine();
-                        moviesManager.checkout(movieReference, null);
+                        moviesManager.checkout(movieReference,null);
                         break;
                     case "View books checked out":
-                        booksManager.showAllCheckedOut();
+                        HashMap<Integer, Book> checkedOutBooks = (HashMap<Integer, Book>) booksManager.getAllCheckedOut();
+                        checkedOutBooks.forEach((i, book) -> {
+                            String bookDetails = String.format(
+                                    "%d- %s | %s | %d [Checked out by: %s]",
+                                    i, book.getTitle(), book.getAuthor(), book.getYearPublished(),
+                                    book.getUserWhoCheckedOut());
+                            System.out.println(bookDetails);
+                        });
                         break;
                     case "Login":
                         System.out.println("Library number:");
                         String libraryNumber = scanner.nextLine();
                         System.out.println("Password:");
                         String password = scanner.nextLine();
-                        userAccountsManager.areValidCredentials(libraryNumber,password);
                         userAccountsManager.logIn(libraryNumber,password);
                         break;
                     case "View my information":

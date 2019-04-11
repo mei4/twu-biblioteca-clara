@@ -11,7 +11,7 @@ public class UserAccountsManager {
         this.users = users;
     }
 
-    public boolean areValidCredentials(String libraryNumber, String password) {
+    private boolean areValidCredentials(String libraryNumber, String password) {
         User userAccount = getUserByLibraryNumber(libraryNumber);
         return userAccount.isValidPassword(password);
     }

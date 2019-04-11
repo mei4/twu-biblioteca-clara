@@ -1,7 +1,5 @@
 package com.twu.biblioteca.user;
 
-import com.twu.biblioteca.user.User;
-import com.twu.biblioteca.user.UserAccountsManager;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -10,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 public class UserAccountsManagerTest {
@@ -20,15 +17,15 @@ public class UserAccountsManagerTest {
             new User("XYZ-4321", "superNicePassword", null, null, null)));
     UserAccountsManager userAccountsManager = new UserAccountsManager(users);
 
-    @Test
-    public void checkIfGivenCorrectNumberAndPasswordIsValidUser() {
-        assertTrue(userAccountsManager.areValidCredentials("ABC-1234", "nicePassword"));
-    }
-
-    @Test
-    public void checkIfGivenNumberAndWrongPasswordIsValidUser() {
-        assertFalse(userAccountsManager.areValidCredentials("XYZ-4321", "nicePassword"));
-    }
+//    @Test
+//    public void checkIfGivenCorrectNumberAndPasswordIsValidUser() {
+//        assertTrue(userAccountsManager.areValidCredentials("ABC-1234", "nicePassword"));
+//    }
+//
+//    @Test
+//    public void checkIfGivenNumberAndWrongPasswordIsValidUser() {
+//        assertFalse(userAccountsManager.areValidCredentials("XYZ-4321", "nicePassword"));
+//    }
 
     @Test
     public void checkThatAMessageIsThrownWhenAUserLogsInWithWrongCredentials() {

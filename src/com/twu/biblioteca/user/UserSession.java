@@ -1,5 +1,7 @@
 package com.twu.biblioteca.user;
 
+import com.twu.biblioteca.user.exception.NoUserLoggedIn;
+
 public class UserSession {
 
     private boolean isLoggedIn;
@@ -18,6 +20,7 @@ public class UserSession {
     }
 
     public User getUser() {
+        if (user == null) { throw new NoUserLoggedIn(); }
         return user;
     }
 

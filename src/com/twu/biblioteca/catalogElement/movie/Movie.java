@@ -24,6 +24,10 @@ public class Movie extends CatalogElement {
         return details;
     }
 
+    public void checkout() {
+        isCheckout = true;
+    }
+
     public int getYear() {
         return year;
     }

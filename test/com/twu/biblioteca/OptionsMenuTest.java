@@ -6,10 +6,12 @@ import com.twu.biblioteca.catalogElement.movie.Movie;
 import com.twu.biblioteca.catalogElement.movie.MoviesManager;
 import com.twu.biblioteca.user.User;
 import com.twu.biblioteca.user.UserAccountsManager;
+import com.twu.biblioteca.user.exception.NoUserLoggedIn;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
+import org.junit.rules.ExpectedException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -19,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class OptionsMenuTest {
 
@@ -34,18 +38,25 @@ public class OptionsMenuTest {
 
     private String errorInvalidOption = "Please select a valid option";
 
-    List<Book> books = new ArrayList<>(Arrays.asList(
+    private Book mockedBook1;
+    private Book mockedBook2;
+    private Book mockedBook3;
+
+    List<Book> mockedBooks = new ArrayList<>(Arrays.asList(
             new Book("To Kill a Mockingbird", "Harper Lee", 1988),
             new Book("Pride and Prejudice", "Jane Austen", 1813),
             new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925)));
-    BooksManager booksManager = new BooksManager(books);
+    BooksManager mockedBooksManager = new BooksManager(mockedBooks);
 
     public List<Movie> movies = new ArrayList<>(Arrays.asList(
             new Movie("Totoro", 1988, "Hayao Miyazaki", 10),
             new Movie("The Lion King", 1994, "Rob Minkoff and Roger Allers", 8),
             new Movie("Captain Marvel", 2019, "Anna Boden and Ryan Fleck", 0)));
     MoviesManager moviesManager = new MoviesManager(movies);
+    MoviesManager mockMoviesManager;
 
+    User mockUser1;
+    User mockUser2;
     User user1 = new User("ABC-1234", "nicePassword", null, null, null);
     User user2 = new User("XYZ-4321", "superNicePassword", null, null, null);
 
@@ -53,11 +64,34 @@ public class OptionsMenuTest {
             new User("ABC-1234", "nicePassword", null, null, null),
             new User("XYZ-4321", "superNicePassword", null, null, null)));
     UserAccountsManager userAccountsManager = new UserAccountsManager(users);
+    UserAccountsManager mockUserAccountsManager;
+
 
     @Before
     public void initialize() {
+        mockedBook1 = mock(Book.class);
+        mockedBook1 = mock(Book.class);
+        mockedBook1 = mock(Book.class);
+//        mockedBooks = mock(List.class);
+//        when(mockedBooks.get(0)).thenReturn(mockedBook1);
+//        when(mockedBooks.get(1)).thenReturn(mockedBook2);
+//        when(mockedBooks.get(2)).thenReturn(mockedBook3);
+//        mockedBooksManager = mock(BooksManager.class);
+
+        mockUser1 = mock(User.class);
+        when(mockUser1.getLibraryNumber()).thenReturn("ABC");
+        mockUser2 = mock(User.class);
+        when(mockUser2.getLibraryNumber()).thenReturn("XYZ");
         userAccountsManager.logIn("XYZ-4321", "superNicePassword");
+        mockUserAccountsManager = mock(UserAccountsManager.class);
+        mockMoviesManager = mock(MoviesManager.class);
     }
+
+    @Rule
+    public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+
+    @Rule
+    public ExpectedException exceptionRule = ExpectedException.none();
 
     @Test
     public void checkThatNothingIsShowedWhenEmptyMenu() {
@@ -86,7 +120,8 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatAnErrorMessageIsThrownWhenInvalidOptionSelected() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)), null, null, null);
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)),
+                null, null, null);
         System.setIn(new ByteArrayInputStream("2".getBytes()));
         optionsMenu.showMenu();
 
@@ -129,7 +164,7 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatAllBooksAreDisplayedAfterSelectingTheOption() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)), booksManager, null, null);
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1)), mockedBooksManager, null, null);
         System.setIn(new ByteArrayInputStream("1".getBytes()));
         optionsMenu.showMenu();
 
@@ -145,60 +180,43 @@ public class OptionsMenuTest {
                 "1- " + option1 + "\n", out.toString());
     }
 
-//    @Test
-//    public void checkThatCheckoutOptionIsSelected() throws IOException {
-//        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2)), booksManager);
-//        System.setIn(new ByteArrayInputStream("2".getBytes()));
-//        optionsMenu.showMenu();
-//
-//        ByteArrayOutputStream out = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(out));
-//
-//        optionsMenu.manageOptionSelectedByTheUser();
-//
-//        assertEquals("Please, type the reference of the book:\n", out.toString());
-//    }
-
     @Test
     public void checkThatABookIsCheckoutAfterSelectingTheOption() {
-        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2)), booksManager,
+        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2)), mockedBooksManager,
                 null, userAccountsManager);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("2\n1".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
         optionsMenu.manageOptionSelectedByTheUser();
 
-        assertTrue(books.get(0).isCheckout());
-        assertFalse(books.get(1).isCheckout());
-        assertFalse(books.get(2).isCheckout());
+        assertTrue(mockedBooks.get(0).isCheckout());
+        assertFalse(mockedBooks.get(1).isCheckout());
+        assertFalse(mockedBooks.get(2).isCheckout());
     }
 
     @Test
     public void checkThatABookIsReturnedAfterSelectingTheOption() {
-        booksManager.checkout("1", null);
-        booksManager.checkout("2", null);
-        assertTrue(books.get(0).isCheckout());
-        assertTrue(books.get(1).isCheckout());
+        mockedBooksManager.checkout("1", mockUser1);
+        mockedBooksManager.checkout("2", mockUser2);
+        assertTrue(mockedBooks.get(0).isCheckout());
+        assertTrue(mockedBooks.get(1).isCheckout());
 
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3)),
-                booksManager, null, userAccountsManager);
+                mockedBooksManager, null, userAccountsManager);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("3\n2".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
         optionsMenu.manageOptionSelectedByTheUser();
 
-        assertTrue(books.get(0).isCheckout());
-        assertFalse(books.get(1).isCheckout());
-        assertFalse(books.get(2).isCheckout());
+        assertTrue(mockedBooks.get(0).isCheckout());
+        assertFalse(mockedBooks.get(1).isCheckout());
+        assertFalse(mockedBooks.get(2).isCheckout());
     }
-
-    @Rule
-    public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
     @Test
     public void checkThatTheApplicationIsClosedAfterSelectingTheOption() {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option9)),
-                booksManager, null, null);
+                mockedBooksManager, null, null);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("4".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
@@ -209,7 +227,7 @@ public class OptionsMenuTest {
     @Test
     public void checkThatTheApplicationKeepsShowingTheMenuIfUserDoesNotQuit() {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option9)),
-                booksManager, null, userAccountsManager);
+                mockedBooksManager, null, userAccountsManager);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("2\n2\n".getBytes());
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
@@ -231,7 +249,7 @@ public class OptionsMenuTest {
     @Test
     public void checkThatAllMoviesAreDisplayedAfterSelectingTheOption() {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
-                option9)), booksManager, moviesManager, null);
+                option9)), mockedBooksManager, moviesManager, null);
 
         System.setIn(new ByteArrayInputStream("4".getBytes()));
         optionsMenu.showMenu();
@@ -256,7 +274,7 @@ public class OptionsMenuTest {
     @Test
     public void checkThatAMovieIsCheckoutAfterSelectingTheOption() {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
-                option5, option9)), booksManager, moviesManager, null);
+                option5, option9)), mockedBooksManager, moviesManager, mockUserAccountsManager);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("5\n1".getBytes());
         System.setIn(byteArrayInputStream);
 
@@ -270,11 +288,13 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatAllCheckedOutBooksAreDisplayedAfterSelectingTheOption() {
-        books.get(0).setCheckout(true, user1);
-        books.get(2).setCheckout(true, user2);
+        userAccountsManager.logIn("ABC-1234","nicePassword");
+
+        mockedBooks.get(0).checkout("ABC-1234");
+        mockedBooks.get(2).checkout("XYZ-4321");
 
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
-                option5, option6, option9)), booksManager, moviesManager, null);
+                option5, option6, option9)), mockedBooksManager, moviesManager, userAccountsManager);
         System.setIn(new ByteArrayInputStream("6".getBytes()));
         optionsMenu.showMenu();
 
@@ -298,7 +318,7 @@ public class OptionsMenuTest {
     @Test
     public void checkThatAUserIsLoggedInAfterSelectingTheOption() {
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
-                option5, option6, option7, option9)), booksManager, moviesManager, userAccountsManager);
+                option5, option6, option7, option9)), mockedBooksManager, moviesManager, userAccountsManager);
         System.setIn(new ByteArrayInputStream("7\nABC-1234\nnicePassword".getBytes()));
 
         optionsMenu.showMenu();
@@ -324,53 +344,62 @@ public class OptionsMenuTest {
 
     @Test
     public void checkThatAMessageIsShownAfterSelectingTheCheckoutBookOptionWithoutLogin() {
+        exceptionRule.expect(NoUserLoggedIn.class);
+
         UserAccountsManager userAccountsManagerWithoutLogin = new UserAccountsManager(users);
 
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2)),
-                booksManager, moviesManager, userAccountsManagerWithoutLogin);
+                mockedBooksManager, moviesManager, userAccountsManagerWithoutLogin);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("2".getBytes());
         System.setIn(byteArrayInputStream);
+
         optionsMenu.showMenu();
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-
         optionsMenu.manageOptionSelectedByTheUser();
-
-        assertEquals("You have to login before checking out a book!\n" +
-                "------------------\n" +
-                "1- List of books\n" +
-                "2- Checkout a book\n", out.toString());
     }
 
     @Test
     public void checkThatAMessageIsShownAfterSelectingTheReturnBookOptionWithoutLogin() {
+        exceptionRule.expect(NoUserLoggedIn.class);
+
         UserAccountsManager userAccountsManagerWithoutLogin = new UserAccountsManager(users);
 
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3)),
-                booksManager, moviesManager, userAccountsManagerWithoutLogin);
+                mockedBooksManager, moviesManager, userAccountsManagerWithoutLogin);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("3".getBytes());
         System.setIn(byteArrayInputStream);
+
         optionsMenu.showMenu();
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-
         optionsMenu.manageOptionSelectedByTheUser();
-
-        assertEquals("You have to login before returning out a book!\n" +
-                "------------------\n" +
-                "1- List of books\n" +
-                "2- Checkout a book\n" +
-                "3- Return a book\n", out.toString());
     }
+
+//    @Test
+//    public void checkThatAMessageIsShownAfterSelectingTheReturnBookOptionWithoutLogin() {
+//        UserAccountsManager userAccountsManagerWithoutLogin = new UserAccountsManager(users);
+//
+//        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3)),
+//                mockedBooksManager, moviesManager, userAccountsManagerWithoutLogin);
+//        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("3".getBytes());
+//        System.setIn(byteArrayInputStream);
+//        optionsMenu.showMenu();
+//
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        System.setOut(new PrintStream(out));
+//
+//        optionsMenu.manageOptionSelectedByTheUser();
+//
+//        assertEquals("You have to login before returning out a book!\n" +
+//                "------------------\n" +
+//                "1- List of books\n" +
+//                "2- Checkout a book\n" +
+//                "3- Return a book\n", out.toString());
+//    }
 
     @Test
     public void checkThatAMessageIsShownAfterSelectingViewMyInformationWithoutLogin() {
         UserAccountsManager userAccountsManagerWithoutLogin = new UserAccountsManager(users);
 
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
-                option5, option6, option7, option8, option9)), booksManager, moviesManager, userAccountsManagerWithoutLogin);
+                option5, option6, option7, option8, option9)), mockedBooksManager, moviesManager, userAccountsManagerWithoutLogin);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("8".getBytes());
 
         System.setIn(byteArrayInputStream);

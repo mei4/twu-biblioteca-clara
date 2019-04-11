@@ -1,4 +1,4 @@
-package com.twu.biblioteca.catalogElement;
+package com.twu.biblioteca.catalogElement.exceptions;
 
 public class CannotReturnCatalogElement extends RuntimeException {
 
