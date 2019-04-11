@@ -22,12 +22,6 @@ public class Book extends CatalogElement {
         this.yearPublished = yearPublished;
     }
 
-    //TODO: delete
-    @Override
-    public String getDetails() {
-        return title + " | " + author + " | " + yearPublished;
-    }
-
     public String getLibraryNumberCheckout() {
         return userWhoCheckedOut;
     }

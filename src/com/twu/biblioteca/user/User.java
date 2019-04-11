@@ -24,11 +24,6 @@ public class User {
         return  libraryNumber;
     }
 
-    //TODO: delete
-    public String getInformation() {
-        return name + "\n" + email + "\n" + phoneNumber;
-    }
-
     public String getName() {
         return name;
     }

@@ -16,14 +16,6 @@ public class Movie extends CatalogElement {
         this.rating = rating;
     }
 
-    //TODO: delete
-    @Override
-    public String getDetails() {
-        String details = title + " | " + year + " | " + director + " | ";
-        details += (rating == 0) ? "unrated" : rating;
-        return details;
-    }
-
     public void checkout() {
         isCheckout = true;
     }

@@ -75,7 +75,7 @@ public class OptionsMenu {
                     case "Checkout a movie":
                         System.out.println("Please, type the reference of the movie:");
                         String movieReference = scanner.nextLine();
-                        moviesManager.checkout(movieReference,null);
+                        moviesManager.checkout(movieReference);
                         break;
                     case "View books checked out":
                         HashMap<Integer, Book> checkedOutBooks = (HashMap<Integer, Book>) booksManager.getAllCheckedOut();
@@ -95,12 +95,9 @@ public class OptionsMenu {
                         userAccountsManager.logIn(libraryNumber,password);
                         break;
                     case "View my information":
-                        if (userAccountsManager.isLoggedUser()) {
-                            userAccountsManager.showLoggedUserInformation();
-                        }
-                        else {
-                            System.out.println("You have to login to view your information!");
-                        }
+                        User loggedUser = userAccountsManager.getLoggedUser();
+                        System.out.println(String.format("Name: %s\nEmail: %s\nPhone: %s",
+                                loggedUser.getName(), loggedUser.getEmail(), loggedUser.getPhoneNumber()));
                         break;
                 }
                 System.out.println("------------------");

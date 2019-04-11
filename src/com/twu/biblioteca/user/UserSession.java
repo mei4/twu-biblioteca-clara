@@ -23,9 +23,4 @@ public class UserSession {
         if (user == null) { throw new NoUserLoggedIn(); }
         return user;
     }
-
-    //TODO: delete
-    public String getUserInformation() {
-        return user.getInformation();
-    }
 }

@@ -7,10 +7,9 @@ import java.util.List;
 
 public class BooksManager extends CatalogElementsManager {
 
-    private static final String SUCCESS_MESSAGE_CHECKOUT = "Thank you! Enjoy the book";
+    //private static final String SUCCESS_MESSAGE_CHECKOUT = "Thank you! Enjoy the book";
     private static final String ERROR_MESSAGE_CHECKOUT = "Sorry, that book is not available";
-    //TODO: delete
-    private static final String SUCCESS_MESSAGE_RETURN = "Thank you for returning the book";
+    //private static final String SUCCESS_MESSAGE_RETURN = "Thank you for returning the book";
     private static final String ERROR_MESSAGE_RETURN = "That is not a valid book to return";
 
 
@@ -25,4 +24,11 @@ public class BooksManager extends CatalogElementsManager {
             book.checkout(loggedUser.getLibraryNumber());
         }
     }
-}
+
+    public void returnElement(String reference) {
+        if (isValidReference(reference, ERROR_MESSAGE_RETURN)) {
+            int index = Integer.valueOf(reference) - 1;
+            Book book = (Book) catalogElements.get(index);
+            book.returnCatalogElement();
+        }
+    }}

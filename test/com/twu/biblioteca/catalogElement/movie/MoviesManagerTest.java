@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//TODO: delete
 public class MoviesManagerTest {
 
     public List<Movie> movies = new ArrayList<>(Arrays.asList(

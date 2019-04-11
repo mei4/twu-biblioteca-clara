@@ -36,9 +36,4 @@ public class UserAccountsManager {
     public User getLoggedUser() {
         return userSession.getUser();
     }
-
-    //TODO: delete
-    public void showLoggedUserInformation() {
-        System.out.println(userSession.getUserInformation());
-    }
 }

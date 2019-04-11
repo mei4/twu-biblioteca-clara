@@ -372,30 +372,10 @@ public class OptionsMenuTest {
         optionsMenu.manageOptionSelectedByTheUser();
     }
 
-//    @Test
-//    public void checkThatAMessageIsShownAfterSelectingTheReturnBookOptionWithoutLogin() {
-//        UserAccountsManager userAccountsManagerWithoutLogin = new UserAccountsManager(users);
-//
-//        OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3)),
-//                mockedBooksManager, moviesManager, userAccountsManagerWithoutLogin);
-//        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("3".getBytes());
-//        System.setIn(byteArrayInputStream);
-//        optionsMenu.showMenu();
-//
-//        ByteArrayOutputStream out = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(out));
-//
-//        optionsMenu.manageOptionSelectedByTheUser();
-//
-//        assertEquals("You have to login before returning out a book!\n" +
-//                "------------------\n" +
-//                "1- List of books\n" +
-//                "2- Checkout a book\n" +
-//                "3- Return a book\n", out.toString());
-//    }
-
     @Test
     public void checkThatAMessageIsShownAfterSelectingViewMyInformationWithoutLogin() {
+        exceptionRule.expect(NoUserLoggedIn.class);
+
         UserAccountsManager userAccountsManagerWithoutLogin = new UserAccountsManager(users);
 
         OptionsMenu optionsMenu = new OptionsMenu(new ArrayList<>(Arrays.asList(option1, option2, option3, option4,
@@ -405,21 +385,6 @@ public class OptionsMenuTest {
         System.setIn(byteArrayInputStream);
         optionsMenu.showMenu();
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-
         optionsMenu.manageOptionSelectedByTheUser();
-
-        assertEquals("You have to login to view your information!\n" +
-                "------------------\n" +
-                "1- List of books\n" +
-                "2- Checkout a book\n" +
-                "3- Return a book\n" +
-                "4- List of movies\n" +
-                "5- Checkout a movie\n" +
-                "6- View books checked out\n" +
-                "7- Login\n" +
-                "8- View my information\n" +
-                "9- Quit\n", out.toString());
     }
 }
