@@ -69,9 +69,9 @@ public class OptionsMenuTest {
 
     @Before
     public void initialize() {
-        mockedBook1 = mock(Book.class);
-        mockedBook1 = mock(Book.class);
-        mockedBook1 = mock(Book.class);
+//        mockedBook1 = mock(Book.class);
+//        mockedBook2 = mock(Book.class);
+//        mockedBook3 = mock(Book.class);
 //        mockedBooks = mock(List.class);
 //        when(mockedBooks.get(0)).thenReturn(mockedBook1);
 //        when(mockedBooks.get(1)).thenReturn(mockedBook2);
