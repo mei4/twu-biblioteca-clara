@@ -1,4 +1,4 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.catalogElement;
 
 import com.twu.biblioteca.catalogElement.CannotCheckOutCatalogElement;
 import com.twu.biblioteca.catalogElement.CannotReturnCatalogElement;
@@ -40,10 +40,15 @@ public class CatalogElementTest {
 
     @Test
     public void checkedOutCatalogElementCanNotBeCheckedOutAgain() {
-        exceptionRule.expect(CannotCheckOutCatalogElement.class);
-        exceptionRule.expectMessage("Sorry, that book is not available");
         catalogElement.checkout(null);
-        catalogElement.checkout("Abc");
+//        exceptionRule.expect(CannotCheckOutCatalogElement.class);
+//        exceptionRule.expectMessage("Sorry, that book is not available");
+        try {
+            catalogElement.checkout("Abc");
+        } catch (CannotCheckOutCatalogElement e) {
+            assertEquals(e.getMessage(), "Sorry, that book is not available");
+            assertNull(catalogElement.getLibraryNumberCheckout());
+        }
     }
 
     @Test

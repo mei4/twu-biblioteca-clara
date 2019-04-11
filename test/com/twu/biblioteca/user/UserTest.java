@@ -1,6 +1,6 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.user;
 
-import com.twu.biblioteca.catalogElement.user.User;
+import com.twu.biblioteca.user.User;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertFalse;
@@ -23,11 +23,18 @@ public class UserTest {
     }
 
     @Test
-    public void checkThatUserInformationIncludeNameEmailAndPhoneNumber() {
-        String userInformation = user.getInformation();
-        assertEquals(userInformation,
-                "Joe\n" +
-                "joe@biblioteca.com\n" +
-                "612345678");
+    public void checkThatAUserHasNameEmailAndPhoneNumber() {
+        assertEquals(user.getName(), "Joe");
+        assertEquals(user.getEmail(), "joe@biblioteca.com");
+        assertEquals(user.getPhoneNumber(), "612345678");
     }
+
+//    @Test
+//    public void checkThatUserInformationIncludeNameEmailAndPhoneNumber() {
+//        String userInformation = user.getInformation();
+//        assertEquals(userInformation,
+//                "Joe\n" +
+//                "joe@biblioteca.com\n" +
+//                "612345678");
+//    }
 }

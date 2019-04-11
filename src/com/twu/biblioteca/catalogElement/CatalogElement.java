@@ -1,6 +1,6 @@
 package com.twu.biblioteca.catalogElement;
 
-import com.twu.biblioteca.catalogElement.user.User;
+import com.twu.biblioteca.user.User;
 
 public abstract class CatalogElement {
 

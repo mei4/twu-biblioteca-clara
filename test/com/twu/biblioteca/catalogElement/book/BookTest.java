@@ -1,13 +1,13 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.catalogElement.book;
 
 import com.twu.biblioteca.catalogElement.book.Book;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class BookTest {
 
-    Book greatGatsby = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925);
 
 
 //    @Test
@@ -33,9 +33,11 @@ public class BookTest {
 
     @Test
     public void checkThatABookHasATitleAuthorAndYearPublished() {
+        Book greatGatsby = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925);
         assertEquals(greatGatsby.getTitle(), "The Great Gatsby");
         assertEquals(greatGatsby.getAuthor(), "F. Scott Fitzgerald");
         assertEquals(greatGatsby.getYearPublished(), 1925);
+        assertNull(greatGatsby.getLibraryNumberCheckout());
     }
 
 

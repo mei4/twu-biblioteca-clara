@@ -1,8 +1,7 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.catalogElement.book;
 
 
-import com.twu.biblioteca.catalogElement.book.Book;
-import com.twu.biblioteca.catalogElement.user.User;
+import com.twu.biblioteca.user.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;

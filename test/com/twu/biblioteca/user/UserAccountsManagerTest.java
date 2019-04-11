@@ -1,7 +1,7 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.user;
 
-import com.twu.biblioteca.catalogElement.user.User;
-import com.twu.biblioteca.catalogElement.user.UserAccountsManager;
+import com.twu.biblioteca.user.User;
+import com.twu.biblioteca.user.UserAccountsManager;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -50,17 +50,24 @@ public class UserAccountsManagerTest {
         assertEquals("Successful login\n", out.toString());
     }
 
+//    @Test
+//    public void checkThatTheInformationOfAUserIsDisplayed() {
+//        userAccountsManager.logIn("ABC-1234", "nicePassword");
+//
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        System.setOut(new PrintStream(out));
+//
+//        userAccountsManager.showLoggedUserInformation();
+//
+//        assertEquals("Abece\n" +
+//                "abc@biblioteca.com\n" +
+//                "9876543210\n", out.toString());
+//    }
+
     @Test
-    public void checkThatTheInformationOfAUserIsDisplayed() {
+    public void checkThatLoggedUserIsReturned() {
         userAccountsManager.logIn("ABC-1234", "nicePassword");
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-
-        userAccountsManager.showLoggedUserInformation();
-
-        assertEquals("Abece\n" +
-                "abc@biblioteca.com\n" +
-                "9876543210\n", out.toString());
+        assertEquals(users.get(0), userAccountsManager.getLoggedUser());
     }
 }

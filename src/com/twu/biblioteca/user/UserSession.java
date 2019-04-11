@@ -1,4 +1,4 @@
-package com.twu.biblioteca.catalogElement.user;
+package com.twu.biblioteca.user;
 
 public class UserSession {
 
@@ -21,6 +21,7 @@ public class UserSession {
         return user;
     }
 
+    //TODO: delete
     public String getUserInformation() {
         return user.getInformation();
     }

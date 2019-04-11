@@ -1,7 +1,7 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.user;
 
-import com.twu.biblioteca.catalogElement.user.User;
-import com.twu.biblioteca.catalogElement.user.UserSession;
+import com.twu.biblioteca.user.User;
+import com.twu.biblioteca.user.UserSession;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

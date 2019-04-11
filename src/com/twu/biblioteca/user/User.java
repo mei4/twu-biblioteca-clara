@@ -1,4 +1,4 @@
-package com.twu.biblioteca.catalogElement.user;
+package com.twu.biblioteca.user;
 
 public class User {
 
@@ -24,7 +24,20 @@ public class User {
         return  libraryNumber;
     }
 
+    //TODO: delete
     public String getInformation() {
         return name + "\n" + email + "\n" + phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

@@ -1,4 +1,4 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.catalogElement;
 
 import com.twu.biblioteca.catalogElement.CatalogElement;
 import com.twu.biblioteca.catalogElement.CatalogElementsManager;
@@ -29,7 +29,7 @@ public class CatalogElementsManagerTest {
     public void initialize() {
         mockedBook1 = mock(Book.class);
         mockedBook2 = mock(Book.class);
-        mockedCatalogElements = mock(List.class);
+        mockedCatalogElements = new ArrayList(Arrays.asList(mockedBook1, mockedBook2));
         catalogElementsManager = new CatalogElementsManager(mockedCatalogElements);
     }
 
@@ -37,17 +37,11 @@ public class CatalogElementsManagerTest {
     public void checkThatAllAvailableCatalogElementsAreReturned() {
         when(mockedBook1.isCheckout()).thenReturn(false);
         when(mockedBook2.isCheckout()).thenReturn(true);
-        when(mockedCatalogElements.get(0)).thenReturn(mockedBook1);
-        when(mockedCatalogElements.get(1)).thenReturn(mockedBook2);
-        when(mockedCatalogElements.size()).thenReturn(2);
-        catalogElementsManager = new CatalogElementsManager(new ArrayList(Arrays.asList(mockedBook1, mockedBook2)));
         assertEquals(catalogElementsManager.getAllAvailable(), new ArrayList(Arrays.asList(mockedBook2)));
     }
 
     @Test
     public void checkThatTheCatalogElementIsReturnedWhenFindByReference() {
-        when(mockedCatalogElements.get(0)).thenReturn(mockedBook1);
-        when(mockedCatalogElements.size()).thenReturn(1);
         assertEquals(catalogElementsManager.getByReference("1"), mockedBook1);
     }
 

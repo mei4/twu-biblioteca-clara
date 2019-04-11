@@ -1,4 +1,4 @@
-package com.twu.biblioteca.catalogElement.user;
+package com.twu.biblioteca.user;
 
 import java.util.List;
 
@@ -37,6 +37,7 @@ public class UserAccountsManager {
         return userSession.getUser();
     }
 
+    //TODO: delete
     public void showLoggedUserInformation() {
         System.out.println(userSession.getUserInformation());
     }

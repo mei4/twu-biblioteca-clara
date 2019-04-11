@@ -1,6 +1,6 @@
 package com.twu.biblioteca.catalogElement;
 
-import com.twu.biblioteca.catalogElement.user.User;
+import com.twu.biblioteca.user.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +78,7 @@ public class CatalogElementsManager<T> {
         return null;
     }
 
-    public HashMap<Integer, T> getAllCheckedOut() {
+    public HashMap<Integer, T > getAllCheckedOut() {
         HashMap<Integer, T> checkedOutElements = new HashMap<>();
         IntStream.range(0, catalogElements.size())
                 .filter(i -> ((CatalogElement)catalogElements.get(i)).isCheckout())
