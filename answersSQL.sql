@@ -1,9 +1,9 @@
 1)
-SELECT m.name FROM Book b, Checkout_item c, Member m WHERE b.TITLE="The Hobbit" AND c.book_id = b.id AND m.id = c.member_id;
+SELECT m.name FROM Book b JOIN Checkout_item c ON b.id=c.book_id JOIN Member m ON c.member_id=m.id WHERE b.TITLE="The Hobbit";
 Anand Beck
 
 2)
-SELECT COUNT(*) from Member WHERE id NOT IN (SELECT member_id FROM Checkout_item);
+SELECT COUNT(*) from Member m WHERE NOT EXISTS (SELECT * FROM Checkout_item WHERE m.id=member_id);
 37
 
 3)
